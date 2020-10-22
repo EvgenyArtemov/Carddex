@@ -1,0 +1,5 @@
+@import "../../../../../assets/styles/utils/mixin";
+
+.reports-events {
+    @include _page-position
+}

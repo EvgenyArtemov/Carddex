@@ -1,0 +1,126 @@
+@import '../../../../../../../assets/styles/utils/mixin';
+
+.bottombar {
+    width: 100%;
+    min-height: 50px;
+    max-height: 50px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    z-index: 102;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            border-color: map-get($map, borderColor);
+            background: map-get($map, white);
+        }
+    }
+
+    &__header {
+        width: 100%;
+        display: flex;
+        padding: $indent-sm $indent-md;
+        z-index: 103;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, white);
+            }
+        }
+
+        &-title {
+            flex: 1;
+            display: flex;
+        }
+    }
+
+    .custome-button--typical {
+        svg {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, borderColor);
+                }
+            }
+        }
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        margin-left: $indent-md;
+        font-weight: 600;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                color: map-get($map, brandPantonText);
+            }
+        }
+    }
+
+    &__body {
+        height: 0;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    &.shown {
+        animation: bottombarAnim2 0.25s forwards;
+
+        .bottombar__header {
+            flex-direction: row;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    box-shadow: 0px 2px 10px map-get($map, brandBoxShadow);
+                }
+            }
+
+            &-title {
+                flex-direction: row;
+            }
+
+            &-close {
+                .custome-button--typical {
+                    svg {
+                        border: none;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                background: map-get($map, white);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottombar__body {
+            height: 100%;
+            visibility: visible;
+        }
+    }
+
+    &.hidden {
+        animation: bottombarAnim1 0.25s forwards;
+    }
+}
+
+@keyframes bottombarAnim2 {
+    0% {
+        min-height: 50px;
+        max-height: 50px;
+    }
+    100% {
+        min-height: 250px;
+        max-height: 250px;
+    }
+}
+
+@keyframes bottombarAnim1 {
+    0% {
+        min-height: 250px;
+        max-height: 250px;
+    }
+    100% {
+        min-height: 50px;
+        max-height: 50px;
+    }
+}

@@ -1,0 +1,102 @@
+$themes: (
+    light: (
+        black: #000000,
+        brandPantonBlack: #191e22,
+        brandPantonText: #293440,
+        brandTimeTableDay: #333333,
+        brandSideColor: #404040,
+        brandPantonSubText: #8b9298,
+        brandBorderColor: #c4c4c4,
+        brandPantonFonts: #ebeff3,
+        borderColor: #efefef,
+        brandBackground: #f1f1f1,
+        brandBackgroundCard: #fafafa,
+        white: #ffffff,
+        brandBoxShadow: #0000001a,
+        brandBoxShadowComplex1: #0000000c,
+        brandBoxShadowComplex2: #0000000d,
+        brandBoxShadowComplex3: #00000012,
+        brandTimeTableRuler: #c4c4c43d,
+        brandPantonRed: #ff0000,
+        brandTimeTableWeekend: #ff5757,
+        brandPantonYellow: #ffcc00,
+        brandPantonGreen: #20cd32,
+        brandPantonBlue: #1d68d9,
+        brandSideBorderColor: #94cbfd,
+        brandFocus: #8dcdff,
+        brandInput: #e8f0fe,
+        brandInputBorder: #dfe1e6
+    ),
+    dark: (
+        black: invert(#0f0f0f),
+        brandPantonBlack: invert(#191e22),
+        brandPantonText: #c2cdd8,
+        brandTimeTableDay: invert(#333333),
+        brandSideColor: invert(#404040),
+        brandPantonSubText: invert(#8b9298),
+        brandBorderColor: invert(#a0a0a0),
+        brandPantonFonts: invert(#ebeff3),
+        borderColor: invert(#dfdfdf),
+        brandBackground: invert(#dbdbdb),
+        brandBackgroundCard: invert(#dbdbdb),
+        white: invert(#ebebeb),
+        brandBoxShadow: invert(#0000001a),
+        brandBoxShadowComplex1: invert(#0000000c),
+        brandBoxShadowComplex2: invert(#0000000d),
+        brandBoxShadowComplex3: invert(#00000012),
+        brandTimeTableRuler: invert(#c4c4c43d),
+        brandPantonRed: #ff0000,
+        brandTimeTableWeekend: #ff5757,
+        brandPantonYellow: #ffcc00,
+        brandPantonGreen: #20cd32,
+        brandPantonBlue: #1d68d9,
+        brandSideBorderColor: #94cbfd,
+        brandFocus: #8dcdff,
+        brandInput: #27282b,
+        brandInputBorder: #373839
+    )
+);
+
+$black: #000000;
+$brandPantonBlack: #191e22;
+$brandPantonText: #293440;
+$brandTimeTableDay: #333333;
+$brandTimeTableWeekend: #ff5757;
+$brandSideColor: #404040;
+$brandPantonSubText: #8b9298;
+$brandBorderColor: #c4c4c4;
+$brandPantonFonts: #ebeff3;
+$borderColor: #efefef;
+$brandBackground: #f1f1f1;
+$brandBackgroundCard: #fafafa;
+$white: #ffffff;
+$brandBoxShadow: #0000001a;
+$brandBoxShadowComplex1: #0000000c;
+$brandBoxShadowComplex2: #0000000d;
+$brandBoxShadowComplex3: #00000012;
+$brandTimeTableRuler: #c4c4c43d;
+$brandPantonRed: #ff0000;
+$brandOrangeRed: #ff5757;
+$brandPantonYellow: #ffcc00;
+$brandPantonGreen: #20cd32;
+$brandPantonBlue: #1d68d9;
+$brandCyanBlue: #54adff;
+$brandFocus: #8dcdff;
+$brandInput: #e8f0fe;
+$brandInputBorder: #dfe1e6;
+
+/* Font */
+$fz-sm: 12px;
+$fz-md: 14px;
+$fz-lg: 16px;
+
+/* Module size */
+$module: 7px;
+
+/* Margin per module */
+$indent-sm: $module;
+$indent-md: calc(#{$module} * 2);
+$indent-lg: calc(#{$module} * 3);
+
+/* Border */
+$border-rad_10: 10px;

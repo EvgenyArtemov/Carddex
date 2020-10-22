@@ -1,0 +1,123 @@
+@import '../../../../assets/styles/utils/mixin';
+
+.modal-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    z-index: 1000;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            background: map-get($map, brandBoxShadow);
+        }
+    }
+
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.modal {
+    min-width: 400px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            background: map-get($map, white);
+            box-shadow: 
+                0px 11px 15px -7px (map-get($map, brandBoxShadowComplex1)),
+                0px 24px 38px 3px (map-get($map, brandBoxShadowComplex2)),
+                0px 9px 46px 8px (map-get($map, brandBoxShadowComplex3));
+        }
+    }
+
+    &__header {
+        display: flex;
+        padding: $indent-sm;
+        border-bottom: 1px solid;
+        align-items: center;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-color: map-get($map, borderColor);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            flex: 1;
+
+            &__icon {
+                width: $indent-md;
+                height: $indent-md;
+                margin-right: $indent-sm;
+
+                svg {
+                    vertical-align: top;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonText);
+                        }
+                    }
+                }
+            }
+
+            &__label {
+                font-size: $indent-md;
+                font-weight: 600;
+            }
+
+            &__toggler {
+                align-items: center;
+                margin-left: auto;
+                transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+
+                svg {
+                    width: $indent-lg;
+                    height: $indent-lg;
+                }
+            }
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        padding: $indent-sm $indent-md;
+    }
+
+    &__footer {
+        display: flex;
+        margin-top: auto;
+        border-top: 1px solid;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-color: map-get($map, borderColor);
+            }
+        }
+
+        .modal-footer__content {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: $indent-sm;
+
+            > *:not(*:last-child) {
+                user-select: none;
+                margin-right: $indent-sm;
+            }
+        }
+    }
+}

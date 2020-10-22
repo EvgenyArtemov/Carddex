@@ -1,0 +1,250 @@
+@import 'utils/mixin';
+@import 'utils/reset';
+@import './utils/fonts';
+
+html {
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.app, h1, h2, h3, p {
+    @include _font-family;
+    font-size: $fz-md;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            color: map-get($map, brandPantonText);
+        }
+    }
+}
+
+.dark {
+    background: #000;
+}
+
+.light {
+    background: #fff;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            -webkit-box-shadow: 0 0 0 30px map-get($map, white) inset !important;
+            -webkit-text-fill-color: map-get($map, brandPantonText) !important; 
+        }
+    } 
+}
+
+// FONT
+.p {
+    &--sm {
+        &--thin {
+            @include _p--sm;
+            font-weight: 300;
+        }
+
+        &--normal {
+            @include _p--sm;
+            font-weight: 400;
+        }
+
+        &--bold {
+            @include _p--sm;
+            font-weight: 500;
+        }
+    }
+
+    &--md {
+        &--thin {
+            @include _p--sm;
+            font-weight: 300;
+        }
+        
+        &--normal {
+            @include _p--md;
+            font-weight: 400;
+        }
+
+        &--bold {
+            @include _p--md;
+            font-weight: 500;
+        }
+    }
+
+    &--lg {
+        &--thin {
+            @include _p--lg;
+            font-weight: 300;
+        }
+
+        &--normal {
+            @include _p--lg;
+            font-weight: 400;
+        }
+
+        &--bold {
+            @include _p--lg;
+            font-weight: 500;
+        }
+    }
+}
+
+// WRAPPER
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+// PROGRESSBAR
+.progressbar {
+    width: 100vw;
+    position: absolute;
+    z-index: 1000;
+
+    > div {
+        height: 2px;
+        background: transparent;
+    }
+}
+
+// PAGE POSITION
+.page {
+    @include _page-position;
+    z-index: 1;
+
+    &__wrapper {
+        height: 100%;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        z-index: 102;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+              background: map-get($map, white);
+            }
+        }
+    }
+}
+
+// FOCUS-VISIBLE POLIFIL SETUP
+
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+}
+
+// PRIMEREACR STYLE //
+/* PHIGH-TLIGHT*/
+.p-highlight {
+    background: $brandPantonBlue !important;
+}
+
+.p-accordion .p-highlight a {
+    background: $brandPantonSubText !important;
+}
+
+/* TABLE CUSTOM GLOBAL STYLING */
+
+.table-wrapper {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: $indent-md;
+}
+
+.table {
+    width: 100%;
+    height: 100%;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+          background: map-get($map, brandBackground);
+        }
+    }
+
+    * {
+        font-size: $indent-md;
+    }
+
+    tr.p-highlight:focus {
+        outline: none;
+    }
+
+    td {
+        cursor: default;
+    }
+}
+
+.p-column-title {
+    width: calc(100% - 16px);
+    display: flex;
+    padding-right: $indent-sm;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.p-sortable-column {    
+    .p-sortable-column-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 70px;
+        display: flex;
+        align-items: center;
+        margin: 0 0.72845rem 0 0;
+        background: linear-gradient(to right, transparent, #f4f4f4);
+        transition: all 0.2s;
+    }    
+
+    .pi-sort-alt:before,
+    .pi-sort-amount-up-alt:before,
+    .pi-sort-amount-down::before {
+        margin-left: auto;
+    }
+
+    &:hover {
+        .p-sortable-column-icon {
+            background: linear-gradient(to right, transparent, #e0e0e0);
+        }
+    }
+
+    &.p-highlight {
+        .p-sortable-column-icon {
+            background: linear-gradient(to right, transparent, $brandPantonBlue);
+            transition: all 0.2s;
+        }
+    
+        &:hover {
+            background: darken($brandPantonBlue, 10%) !important;
+            .p-sortable-column-icon {
+                background: linear-gradient(to right, transparent, darken($brandPantonBlue, 10%));
+            }
+        }
+    }
+}
+
+.p-column-filter {
+    width: 100%;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+    &:hover {
+        border-color: $brandPantonBlue !important;
+    }
+}
+
+.p-datatable-tbody > tr > td {
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

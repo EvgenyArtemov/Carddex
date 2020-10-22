@@ -1,0 +1,19 @@
+.wrapper {
+    animation: wrapperAnimation 1s forwards;
+}
+
+.content {
+    width: 100vw;
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: row;
+}
+
+@keyframes wrapperAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

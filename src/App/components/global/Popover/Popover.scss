@@ -1,0 +1,36 @@
+@import '../../../../assets/styles/utils/mixin';
+
+#popover {
+    position: relative;
+    height: 100%;
+}
+
+.popover__message {
+    // font-family: 'Roboto';
+    position: absolute;
+    top: 0;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    animation-name: popover;
+    animation-duration: 0.1s;
+    background-color: $brandPantonBlue;
+    color: $white;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            background-color: map-get($map, brandPantonBlue);
+            color: map-get($map, white);
+        }
+    }
+}
+
+@keyframes popover {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

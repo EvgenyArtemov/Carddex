@@ -1,0 +1,361 @@
+@import '../../../../../../../../../assets/styles/utils/mixin';
+
+$sliderCircleSize: $indent-lg;
+
+.turnstile {
+    display: flex;
+
+    &__modes {
+        flex: 1 100%;
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+
+        &-title {
+            padding-left: $indent-md;
+            margin-bottom: $indent-md;
+        }
+
+        &-slider {
+            flex: 1 100%;
+            display: flex;
+            flex-direction: column;
+            padding-right: $indent-md;
+
+            .turnstile-slider {
+                &__child {
+                    display: flex;
+                    z-index: 2;
+
+                    &-buttons {
+                        width: $sliderCircleSize;
+                        height: $sliderCircleSize;
+                        padding: 1px;
+                        position: relative;
+                        border-radius: 50%;
+                        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                        cursor: pointer;
+
+                        &.focus-visible {
+                            @each $theme, $map in $themes {
+                                .#{$theme} & {
+                                  box-shadow: 0 0 0 0.2rem map-get($map, brandFocus);
+                                }
+                            }
+                        }
+                    }                    
+
+                    &-ring {
+                        width: 100%;
+                        height: 100%;
+                        border: 3px solid;
+                        border-radius: 50%;
+                        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                              border-color: map-get($map, brandSideColor);
+                            }
+                        }
+                    }
+
+                    &-dot {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+                        &:after {
+                            content: "";
+                            width: 0px;
+                            height: 0px;
+                            border-radius: 50%;
+                            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                            @each $theme, $map in $themes {
+                                .#{$theme} & {
+                                    background: map-get($map, brandSideColor);
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            &:after {
+                                width: 7px;
+                                height: 7px;
+                                @each $theme, $map in $themes {
+                                    .#{$theme} & {
+                                        background: map-get($map, brandSideColor);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &-titles {
+                        margin-left: $indent-sm;
+                        display: flex;
+                        align-items: center;
+                        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+                        &>* {
+                            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                        }
+                    }
+
+                    &--active {
+                        &-first {
+                            .turnstile-slider__child-ring {
+                                @each $theme, $map in $themes {
+                                    .#{$theme} & {
+                                        border-color: map-get($map, brandPantonGreen);
+                                    }
+                                }
+                            }
+
+                            .turnstile-slider__child-dot {
+                                &:after {
+                                    width: calc(100% - 12px);
+                                    height: calc(100% - 12px);
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: map-get($map, brandPantonGreen);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &-second {
+                            .turnstile-slider__child-ring {
+                                @each $theme, $map in $themes {
+                                    .#{$theme} & {
+                                        border-color: map-get($map, brandPantonYellow);
+                                    }
+                                }
+                            }
+
+                            .turnstile-slider__child-dot {
+                                &:after {
+                                    width: calc(100% - 12px);
+                                    height: calc(100% - 12px);
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: map-get($map, brandPantonYellow);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &-third {
+                            .turnstile-slider__child-ring {
+                                @each $theme, $map in $themes {
+                                    .#{$theme} & {
+                                        border-color: map-get($map, brandPantonRed);
+                                    }
+                                }
+                            }
+
+                            .turnstile-slider__child-dot {
+                                &:after {
+                                    width: calc(100% - 12px);
+                                    height: calc(100% - 12px);
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: map-get($map, brandPantonRed);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &-first, &-second, &-third {
+                            .turnstile-slider__child-buttons {
+                                padding: 0;
+                            }
+
+                            .turnstile-slider__child-titles {
+                                &>* {
+                                    font-size: 14px;
+                                    line-height: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &__spliter {
+                    flex: 1 100%;
+                    width: $sliderCircleSize;
+                    display: flex;
+                    justify-content: center;
+                    position: relative;
+                    z-index: 1;
+
+                    &-element {
+                        position: absolute;
+                        top: -3px;
+                        width: 3px;
+                        height: calc(100% + 5px);
+                        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                background: 
+                                    linear-gradient(
+                                        0deg, 
+                                        map-get($map, brandSideColor) 0%,
+                                        map-get($map, brandSideColor) 100%
+                                    );
+                            }
+                        }
+                    }
+
+                    &--active {
+                        &-first {
+                            &.first-spliter {
+                                .turnstile-slider__spliter-element {
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: 
+                                                linear-gradient(
+                                                    0deg, 
+                                                    map-get($map, brandSideColor) 0%,
+                                                    map-get($map, brandPantonGreen) 100%
+                                                );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &-second {
+                            &.first-spliter {
+                                .turnstile-slider__spliter-element {
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: 
+                                                linear-gradient(
+                                                    0deg, 
+                                                    map-get($map, brandPantonYellow) 0%,
+                                                    map-get($map, brandSideColor) 100%
+                                                );
+                                        }
+                                    }
+                                }
+                            }
+                            &.second-spliter {
+                                .turnstile-slider__spliter-element {
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: 
+                                                linear-gradient(
+                                                    0deg, 
+                                                    map-get($map, brandSideColor) 0%,
+                                                    map-get($map, brandPantonYellow) 100%
+                                                );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &-third {
+                            &.second-spliter {
+                                .turnstile-slider__spliter-element {
+                                    @each $theme, $map in $themes {
+                                        .#{$theme} & {
+                                            background: 
+                                                linear-gradient(
+                                                    0deg, 
+                                                    map-get($map, brandPantonRed) 0%,
+                                                    map-get($map, brandSideColor) 100%
+                                                );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__control {
+        z-index: 2;
+
+        &-title {
+            padding-left: $indent-md;
+            margin-bottom: $indent-md;
+        }
+
+        &-buttons {
+            display: flex;
+            flex-direction: column;
+            padding-left: $indent-md;
+            border-left: 1px solid;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    border-color: map-get($map, brandBorderColor);
+                }
+            }
+        }
+
+        .turnstile-control{
+            &__buttons-grups {
+                display: flex;
+
+                &:first-child {
+                    padding-bottom: calc(#{$indent-sm} / 2);
+                }
+
+                &:nth-child(2) {
+                    padding-top: calc(#{$indent-sm} / 2);
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            border-top: 1px solid map-get($map, brandBorderColor);
+                        }
+                    }
+                }
+
+                &>*:nth-child(n) {
+                    margin-right: $indent-sm;
+                }
+
+                &>*:last-child {
+                    margin-right: 0;
+                }
+
+                .custome-button {
+                    &:not(.custome-button--active) {
+                        svg {
+                            @each $theme, $map in $themes {
+                                .#{$theme} & {
+                                    background: map-get($map, borderColor);
+                                }
+                            }
+                        }
+                    }
+                
+                    &:hover {
+                        transform:scale(1.5);
+                    }
+
+                    &--disable {
+                        svg {
+                            @each $theme, $map in $themes {
+                                .#{$theme} & {
+                                    fill: map-get($map, brandPantonRed);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

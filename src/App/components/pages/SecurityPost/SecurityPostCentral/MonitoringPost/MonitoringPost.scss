@@ -1,0 +1,17 @@
+@import "../../../../../../assets/styles/utils/mixin";
+
+.monitoring-post {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+
+    .tabbar-tabs {
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, brandBackgroundCard); 
+            }
+        }
+    }
+}

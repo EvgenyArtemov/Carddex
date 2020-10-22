@@ -1,0 +1,6 @@
+{
+    "baseURL": "15355",
+    "defaultTitle": "| v1.0.0.5",
+    "apiUrl": "https://team.carddex.ru/api/rr/",
+    "testApi": "http://172.16.3.118:9020/api"
+}

@@ -1,0 +1,457 @@
+@import '../../../../../../assets/styles/utils/mixin';
+
+.timetable {
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 $indent-lg;
+        margin-top: -15px;
+        user-select: none;
+
+        .controls {
+            display: flex;
+            width: 100%;
+            padding-left: 23px;
+
+            &__month {
+                display: flex;
+                place-items: center;
+                font-weight: 600;
+                font-size: 16px;
+
+                & > span {
+                    width: 80px;
+                    text-align: center;
+                    padding-left: 7px;
+                    margin-top: -2px;
+                    color: $brandPantonBlack;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandPantonBlack);
+                        }
+                    }
+                }
+            }
+
+            &__year {
+                display: flex;
+                place-items: center;
+                font-weight: 600;
+                font-size: 16px;
+                margin-left: 20px;
+
+                & > span {
+                    text-align: center;
+                    width: 50px;
+                    padding-left: 7px;
+                    margin-top: -2px;
+                    color: $brandPantonBlack;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandPantonBlack);
+                        }
+                    }
+                }
+            }
+
+            &__buttons {
+                margin-left: $indent-sm;
+                .controls__button {
+                    width: 24px;
+                    height: 24px;
+                    cursor: pointer;
+                    margin: 2px;
+                    padding: 5px;
+                    border-radius: 10px;
+                    & > svg {
+                        fill: $brandPantonBlack;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                fill: map-get($map, brandPantonBlack);
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.06);
+                        transform: scale(1.2);
+                        background: $brandBackground;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                background: map-get($map, brandBackground);
+                            }
+                        }
+                    }
+                }
+
+                .controls__button:active {
+                    box-shadow: unset;
+                    transform: translateY(1px) scale(1.2);
+                }
+            }
+        }
+
+        .statistics {
+            display: flex;
+            position: relative;
+            width: 100%;
+            background: $brandBackground;
+            border-radius: 10px;
+            margin: 5px 0 10px -4px;
+            padding: 10px 0;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, brandBackground);
+                }
+            }
+
+            &__header:nth-child(1) {
+                margin-bottom: 20px;
+            }
+
+            .stat__spacer {
+                position: absolute;
+                top: 50%;
+                left: 108px;
+                transform: translateY(-50%);
+                height: 45px;
+                width: 1px;
+                background: #bdbdbd;
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 0 10px;
+                margin-left: 40px;
+            }
+
+            .column:first-child {
+                margin-left: 30px;
+            }
+
+            .stat__text {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 12px;
+                color: $brandSideColor;
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        color: map-get($map, brandSideColor);
+                    }
+                }
+            }
+
+            .text--dark {
+                color: $brandTimeTableDay;
+            }
+
+            .text--blue {
+                color: #54adff;
+            }
+        }
+
+        .descriptions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            margin-left: -18px;
+
+            &__item {
+                display: flex;
+                margin: 7px;
+
+                & > .correction__sign--manual {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 50%;
+                    background-color: $brandOrangeRed;
+                    transform: translateY(4px);
+                    margin-right: 10px;
+                }
+
+                & > .correction__sign--holidays {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 50%;
+                    background-color: $brandCyanBlue;
+                    transform: translateY(4px);
+                    margin-right: 10px;
+                }
+
+                & > .correction__meaning {
+                    color: $brandTimeTableDay;
+                    font-size: 12px;
+                    font-weight: 500;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandTimeTableDay);
+                        }
+                    }
+                }
+            }
+        }
+
+        & a,
+        & a:active,
+        & a:focus {
+            outline: none;
+            box-shadow: unset !important;
+        }
+    }
+
+    &__header {
+        @include _p--md;
+        text-align: center;
+    }
+
+    &__calendar {
+        position: relative;
+        display: flex;
+        max-width: 400px;
+        flex-wrap: wrap;
+        margin-top: -15px;
+        .calendar {
+            &__spacer {
+                display: block;
+                width: 50px;
+                height: 50px;
+            }
+
+            &__weekdays {
+                display: flex;
+                padding-left: 40px;
+
+                &__day {
+                    @include _p--sm;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 500;
+                    width: 50px;
+                    height: 40px;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandPantonSubText);
+                        }
+                    }
+                }
+
+                &__day.weekend {
+                    color: #ffa6a6;
+                }
+
+                .weekdays__border {
+                    position: absolute;
+                    top: 42px;
+                    left: 51px;
+                    display: block;
+                    background-color: $brandBorderColor;
+                    height: 1px;
+                    width: 326px;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            background-color: map-get($map, brandBorderColor);
+                        }
+                    }
+                }
+            }
+
+            &__weeknumbers {
+                @include _p--sm;
+                display: flex;
+                flex-direction: column;
+                width: 40px;
+                margin-top: -12px;
+
+                &__number {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 500;
+                    width: 40px;
+                    height: 75px;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandPantonSubText);
+                        }
+                    }
+                }
+            }
+
+            &__body {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: center;
+                width: 350px;
+                margin-top: 1px;
+
+                & > .day {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    width: 50px;
+                    height: 75px;
+                    border-radius: 10px;
+                    color: white;
+                    cursor: pointer;
+                    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+                    &.selected:after {
+                        content: '';
+                        position: absolute;
+                        top: 11px;
+                        left: -3px;
+                        width: 57px;
+                        height: 25px;
+                        border-radius: 5px;
+                        background: $brandPantonBlue;
+                        z-index: 1;
+                        box-shadow: 0px 10px 10px rgba(84, 173, 255, 0.25);
+                    }
+
+                    &.past {
+                        opacity: 0.2;
+                    }
+
+                    .day__hours {
+                        font-size: 14px;
+                        font-weight: 500;
+                        margin-top: 15px;
+                        z-index: 3;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                color: map-get($map, brandTimeTableDay);
+                            }
+                        }
+
+                        &.good {
+                            color: green;
+                        }
+
+                        &.bad {
+                            color: red;
+                        }
+                    }
+
+                    .day__number {
+                        @include _p--sm;
+                        font-weight: 500;
+                        margin-top: 18px;
+                        z-index: 3;
+
+                        &.current {
+                            font-weight: 500;
+                        }
+
+                        &.weekend {
+                            color: #ff5757;
+                        }
+
+                        &.selected {
+                            color: $white;
+                        }
+                    }
+
+                    &.selected {
+                        .day__number {
+                            color: white;
+                        }
+                    }
+
+                    &.bad:before {
+                        content: '';
+                        position: absolute;
+                        top: 11px;
+                        left: -3px;
+                        width: 57px;
+                        height: 25px;
+                        border-radius: 5px;
+                        background: $brandOrangeRed;
+                        z-index: 2;
+                        box-shadow: 0px 10px 10px rgba(235, 87, 87, 0.2);
+                    }
+
+                    &.correction:after {
+                        content: '';
+                        position: absolute;
+                        top: 59px;
+                        width: 5px;
+                        height: 5px;
+                        background-color: $brandOrangeRed;
+                        border-radius: 50%;
+                        margin-top: 5px;
+                        z-index: 2;
+                    }
+
+                    // Colorizing day number and hours in BLUE
+                    &.good {
+                        position: relative;
+                        color: $brandCyanBlue;
+
+                        .day__hours {
+                            z-index: 3;
+                            color: $brandCyanBlue;
+                        }
+
+                        .day__number {
+                            z-index: 3;
+                            color: white;
+                        }
+                    }
+
+                    &.weekend {
+                        color: $brandTimeTableWeekend;
+                    }
+
+                    &.good:before {
+                        content: '';
+                        position: absolute;
+                        top: 11px;
+                        left: -3px;
+                        width: 57px;
+                        height: 25px;
+                        border-radius: 5px;
+                        background: $brandCyanBlue;
+                        z-index: 2;
+                        box-shadow: 0px 10px 10px rgba(84, 173, 255, 0.25);
+                    }
+
+                    &:hover {
+                        transform: scale(1.2);
+                        background-color: #fff;
+                        z-index: 100;
+                        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.06);
+                        background: $brandBackground;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                background: map-get($map, brandBackground);
+                            }
+                        }
+                    }
+
+                    &:hover.selected {
+                        color: $white;
+                    }
+
+                    &:hover.bad:before {
+                        left: 3px;
+                        width: 44px;
+                    }
+
+                    &:hover.good:before {
+                        left: 3px;
+                        width: 44px;
+                    }
+                }
+            }
+        }
+    }
+}

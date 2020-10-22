@@ -1,0 +1,135 @@
+@import '../../../../../../assets/styles/utils/mixin';
+
+.edit-employee {
+    height: 100%;
+    display: flex;
+
+    .edit-employee__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: $indent-md;
+
+        &-title {
+            font-weight: 600;
+        }
+
+        &-close {
+            cursor: pointer;
+        }
+    }
+
+    .edit-employee__body {
+        flex: 1 100%;
+        padding: 0 $indent-md;
+    }
+
+    .edit-entry & {
+        transform: translateX(0px);
+    }
+
+    .modal {
+        height: 100%;
+        background: #f4f4f4;
+        box-shadow: none;
+    }
+
+    .modal__body > * {
+        margin-top: $indent-lg;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    .modal__employee-authenticated {
+        display: flex;
+    }
+
+    .modal__employee-data,
+    .modal__employee-contacts {
+        display: flex;
+        flex-direction: column;
+        margin-top: $indent-md;
+
+        & > *:nth-child(n) {
+            margin-bottom: $indent-md;
+        }
+
+        & > *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .modal__employee-photo {
+        width: 100%;
+        max-width: 150px;
+        padding: $indent-md;
+        margin-right: $indent-lg;
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .modal__employee-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .info__item {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .info__header {
+        font-size: $fz-md;
+        color: grey;
+        margin-bottom: 5px;
+        line-height: 14px;
+        font-weight: 400;
+    }
+
+    .info__text {
+        padding-bottom: $indent-md;
+        //border-bottom: 1px solid black;
+        line-height: 14px;
+        font-weight: 600;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    .modal__employee-title {
+        @include _p--lg;
+        font-weight: 500;
+        padding: 10px 0;
+    }
+
+    .modal__employee-credentials {
+        display: flex;
+        flex-wrap: wrap;
+
+        .p-dropdown {
+            flex: 1;
+            margin: 0 10px 10px 0;
+
+            &:nth-child(2n) {
+                margin: 0 0 10px 0;
+            }
+
+            &:nth-last-child(2) {
+                margin: 0 10px 0 0;
+            }
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    .employee-data {
+        display: flex;
+    }
+}

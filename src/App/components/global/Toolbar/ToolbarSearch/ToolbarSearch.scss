@@ -1,0 +1,29 @@
+.toolbar__content__search {
+    position: relative;
+    margin-left: auto;
+
+    input {
+        width: 200px;
+    }
+
+    &__cross {
+        transition: all .2s ease-in-out;
+        opacity: 0;
+
+        &.visible {
+            opacity: 1;
+        }
+
+        > span {
+            position: absolute;
+            top: 9px;
+            right: 5px;
+            cursor: pointer;
+        
+            > svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+}

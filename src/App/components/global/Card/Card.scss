@@ -1,0 +1,17 @@
+.card {
+    min-width: 200px;
+    min-height: 200px;
+    border-radius: $border-rad_10;
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            background-color: map-get($map, white);
+            box-shadow: 0 3px 5px map-get($map, brandBoxShadow);
+        }
+    }
+
+    &__content {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+}

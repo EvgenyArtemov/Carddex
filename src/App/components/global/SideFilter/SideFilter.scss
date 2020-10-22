@@ -1,0 +1,92 @@
+@import '../../../../assets/styles/utils/mixin';
+
+.sidefilter {
+    padding: $indent-md 0;
+    
+    &__wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 100%;
+        border-radius: 2px;
+        z-index: 103;
+        overflow: hidden;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background-color: map-get($map, white);
+                box-shadow: 0 2px 4px map-get($map, brandBoxShadow);
+            }
+        }
+    }
+
+    &__header {
+        display: flex;
+        place-items: center;
+        padding: 7px;
+        border-bottom: 1px solid;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-color: map-get($map, borderColor);
+            }
+        }
+
+        .header {
+            &__title {
+                margin-left: 7px;
+            }
+
+            &__close {
+                display: block;
+                margin-left: auto;
+                cursor: pointer;
+            }
+        }
+
+        .icon {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        display: flex;flex-direction: column;
+        padding: $indent-md 0;
+        overflow: hidden;
+
+        .content {
+            &__items {
+                flex: 1;
+                overflow: hidden;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                &-buttons {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 15px;
+                    padding: 0 $indent-md;
+                }
+
+                .p-accordion-tab {
+                    &>* {
+                        margin: 0 !important;
+                    }
+                }
+            }
+        }
+
+        a,
+        a:active,
+        a:focus {
+            outline: none;
+            box-shadow: unset !important;
+        }
+    }
+}

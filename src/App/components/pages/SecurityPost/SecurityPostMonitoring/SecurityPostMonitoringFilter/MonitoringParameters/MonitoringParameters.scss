@@ -1,0 +1,52 @@
+@import "../../../../../../assets/styles/utils/mixin";
+
+.monitoring-params {
+    display: flex;
+    max-width: 600px;
+    width: 100%;
+    height: 415px;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .content {
+            &__header > h2 {
+                font-size: 21px;
+            }
+
+            &__items {
+                display: flex;
+                margin-top: $indent-md;
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.p-button {
+    width: calc(50% - 5px);
+}
+
+.p-inputswitch-slider:before {
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            background: map-get($map, white);
+        }
+    }
+}
+
+.p-menu {
+    max-width: 250px !important;
+    height: 100%;
+    width: 180px;
+    margin: 0;
+    border-radius: 5px;
+    &item {
+        font-size: 1rem;
+        &-icon {
+            font-size: 1rem;
+        }
+    }
+}

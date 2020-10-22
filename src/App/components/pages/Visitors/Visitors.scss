@@ -1,0 +1,5 @@
+@import "../../../../assets/styles/utils/mixin";
+
+.visitors {
+    @include _page-position
+}

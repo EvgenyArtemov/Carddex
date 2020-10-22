@@ -1,0 +1,5 @@
+@import "../../../../../assets/styles/utils/mixin";
+
+.staff-timetable {    
+    @include _page-position
+}

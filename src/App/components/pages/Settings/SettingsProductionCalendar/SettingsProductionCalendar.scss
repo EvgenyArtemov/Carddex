@@ -1,0 +1,193 @@
+@import '../../../../../assets/styles/utils/mixin';
+
+.settings__production__calendar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .settingsWrapper {
+        display: flex;
+        height: 100%;
+    }
+
+    .production__calendar__wrapper {
+        display: flex;
+        position: relative;
+        width: 100%;
+        margin: $indent-md;
+        border: 1px solid #efefef;
+
+        .timeline {
+            margin-left: 40px;
+            width: 80px;
+            margin-right: -30px;
+
+            &__body {
+                position: relative;
+                margin-top: 50px;
+
+                &::before {
+                    content: '';
+                    display: block;
+                    margin: 5px 10px;
+                    width: 2px;
+                    height: 50px;
+                    background: linear-gradient(180deg, transparent 0%, #585858 100%);
+                }
+
+                &::after {
+                    content: '';
+                    display: block;
+                    margin: 5px 10px;
+                    width: 2px;
+                    height: 50px;
+                    background: linear-gradient(180deg, #585858 0%, transparent 100%);
+                }
+
+                .year.current__year {
+                    position: relative;
+                    font-size: 23px;
+                    font-weight: 600;
+                    margin: 10px 7px;
+                    color: #1d68d9;
+                }
+
+                .year.current__year + span {
+                    height: 35px;
+                }
+
+                .year {
+                    display: flex;
+                    align-items: center;
+                    margin-left: 8px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .year::before {
+                    content: '';
+                    display: block;
+                    width: 7px;
+                    height: 7px;
+                    margin-right: 7px;
+                    border-radius: 50%;
+                    background: $brandPantonSubText;
+                }
+
+                .year.year.current__year::before {
+                    background: $brandPantonBlue;
+                }
+
+                .year:hover {
+                    transform: scale(1.2);
+                }
+            }
+
+            &__line {
+                display: block;
+                height: 20px;
+                width: 2px;
+                margin: 3px 10px;
+                background: #585858;
+            }
+        }
+
+        .production__calendar__body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            justify-items: center;
+            align-items: center;
+            grid-column-gap: 30px;
+            grid-row-gap: 10px;
+            margin: 0 auto;
+            height: 100%;
+
+            .month {
+                padding: 10px;
+                border-radius: 10px;
+                cursor: pointer;
+                user-select: none;
+                transition: all 0.2s ease-in-out;
+                &__header {
+                    text-align: center;
+                    padding: 0 7px;
+                    margin-bottom: 10px;
+                }
+
+                &__weekdays {
+                    display: flex;
+                    position: relative;
+                    margin-bottom: 4px;
+                    margin-left: -4px;
+
+                    & > .weekday {
+                        display: flex;
+                        justify-content: center;
+                        width: 30px;
+                        height: 20px;
+                        text-align: left;
+                        margin-right: 5px;
+                        line-height: 20px;
+                        color: $brandPantonSubText;
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                color: map-get($map, brandPantonSubText);
+                            }
+                        }
+                    }
+                }
+
+                &__weekdays:after {
+                    content: '';
+                    position: absolute;
+                    top: 20px;
+                    left: -20px;
+                    width: 280px;
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent 0%, $brandTimeTableRuler 50%, transparent 100%);
+                }
+
+                &__days {
+                    display: grid;
+                    gap: 5px;
+                    grid-template-columns: repeat(7, 1fr);
+                    grid-template-rows: repeat(5, 1fr);
+                    justify-items: start;
+                }
+
+                &__day {
+                    width: 20px;
+                    height: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: left;
+                    color: $brandSideColor;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandSideColor);
+                        }
+                    }
+                    &.weekend {
+                        color: $brandOrangeRed;
+                    }
+                }
+
+                &.selected {
+                    box-shadow: 0 0 0 1px $brandPantonBlue, 0px 2px 12px rgba(0, 0, 0, 0.06);
+                    border-radius: 10px;
+                }
+
+                &:hover {
+                    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.08);
+                    transform: scale(1.05);
+                }
+
+                &:hover.selected {
+                    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px $brandPantonBlue;
+                }
+            }
+        }
+    }
+}

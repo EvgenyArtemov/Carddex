@@ -1,0 +1,64 @@
+$margin-scrollThumb: 10px;
+
+.scrollhost-container {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.scrollhost {
+    overflow-y: auto;
+    height: 100%;
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.scroll-bar {
+    width: 8px;
+    height: calc(100% - #{$margin-scrollThumb});
+    right: 4px;
+    top: 0px;
+    position: absolute;
+    margin: calc(#{$margin-scrollThumb} / 2) 0;
+    border-radius: 7px;
+    bottom: 0px;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    opacity: 0;
+    z-index: 100;
+
+    &:hover, &.hover {
+        right: 2px;
+        width: 12px;
+        background-color: #7c7c7c4d;
+
+        .scroll-thumb {
+            width: 12px;
+        }
+    }
+
+    &.shown {
+        opacity: 1;
+    }
+
+    .scroll-thumb {
+        width: 8px;
+        height: 20px;
+        position: absolute;
+        border-radius: 7px;
+        opacity: 1;
+        top: 0;
+        background-color: #5050504f;
+        transition: width 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        cursor: grab;
+
+        &:active {
+            background-color: #505050;
+            cursor: grabbing;
+        }
+    }
+}

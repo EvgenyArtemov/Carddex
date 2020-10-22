@@ -1,0 +1,8 @@
+@import '../../../../assets/styles/utils/mixin';
+
+.tabs {
+    display: flex;
+    place-items: center;
+    width: 100%;
+    //border-bottom: 1px solid #efefef;
+}

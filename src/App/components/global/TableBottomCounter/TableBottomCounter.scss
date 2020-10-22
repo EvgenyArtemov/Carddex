@@ -1,0 +1,27 @@
+@import "../../../../assets/styles/utils/mixin";
+
+.table-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $indent-sm;
+    font-size: $indent-md;
+
+    &__current-element {
+        width: 50px;
+        text-align: center;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+              color: map-get($map, brandPantonBlue);
+            }
+        }
+    }
+
+    & > *:nth-child(n):not(:last-child) {
+        margin-right: $indent-sm;
+    }
+
+    & > *:last-child {
+        margin-left: $indent-sm;
+    }
+}

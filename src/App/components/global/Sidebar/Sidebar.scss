@@ -1,0 +1,133 @@
+@import '../../../../assets/styles/utils/mixin';
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    margin: $indent-md 0;
+    border: 1px solid;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            border-color: map-get($map, borderColor);
+            background: map-get($map, white);
+        }
+    }
+
+    &__header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: $indent-sm $indent-sm;
+        z-index: 103;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, white);
+            }
+        }
+
+        &-title {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .custome-button--typical {
+        svg {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, borderColor);
+                }
+            }
+        }
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        margin-top: $indent-md;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-weight: 600;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                color: map-get($map, brandPantonText);
+            }
+        }
+    }
+
+    &__body {
+        width: 0;
+        height: 100%;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    &.shown {
+        animation: sampleanimation2 0.25s forwards;
+
+        .sidebar__header {
+            flex-direction: row;
+            padding: $indent-sm $indent-md;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    box-shadow: 0px 2px 10px map-get($map, brandBoxShadow);
+                }
+            }
+
+            &-title {
+                flex-direction: row;
+            }
+
+            &-close {
+                .custome-button--typical {
+                    svg {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                background: map-get($map, white);
+                            }
+                        }
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        .sidebar__label {
+            writing-mode: horizontal-tb;
+            text-orientation: mixed;
+            margin: 0 0 0 $indent-md;
+        }
+
+        .sidebar__body {
+            width: 100%;
+        }
+    }
+
+    &.hidden {
+        animation: sampleanimation1 0.25s forwards;
+    }
+}
+
+@keyframes sampleanimation2 {
+    0% {
+        min-width: 50px;
+        max-width: 50px;
+    }
+    100% {
+        min-width: 400px;
+        max-width: 400px;
+    }
+}
+
+@keyframes sampleanimation1 {
+    0% {
+        min-width: 400px;
+        max-width: 400px;
+    }
+    100% {
+        min-width: 50px;
+        max-width: 50px;
+    }
+}

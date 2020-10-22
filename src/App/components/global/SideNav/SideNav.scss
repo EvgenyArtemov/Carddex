@@ -1,0 +1,505 @@
+@import '../../../../assets/styles/utils/mixin';
+
+.side {
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid;
+    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+    @each $theme, $map in $themes {
+        .#{$theme} & {
+            border-color: map-get($map, borderColor);
+            background: map-get($map, white);
+        }
+    }
+
+    &.shown {
+        animation: sidenavAnim1 0.25s forwards;
+    }
+
+    &__top {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .nav-wrapper {
+        &:last-child {
+            margin-bottom: $indent-md;
+        }
+    }
+
+    .nav-link {
+        display: block;
+        margin: $indent-md $indent-md 0 $indent-md;
+        border: 1px solid;
+        border-radius: $border-rad_10;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        cursor: pointer;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-color: map-get($map, borderColor);
+            }
+        }
+
+        & > *:first-child {
+            border-radius: $border-rad_10;
+        }
+    }
+
+    .nav--active {
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                box-shadow: 0 10px 10px 0 (map-get($map, brandBoxShadow));
+            }
+        }
+    }
+
+    .submenu {
+        display: none;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-top: 1px solid (map-get($map, brandBackground));
+            }
+        }
+
+        .sub-link {
+            display: block;
+            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, brandBackground);
+                }
+            }
+
+            &.active-page {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        background: map-get($map, brandPantonBlue);
+                    }
+                }
+            }
+
+            &.focus-visible {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        box-shadow: 0 0 0 0.2rem (map-get($map, brandFocus));
+                    }
+                }
+            }
+        }
+
+        .subparagraph {
+            position: relative;
+            padding-left: 40px;
+
+            .list-name__icon {
+                display: none;
+            }
+        }
+    }
+
+    .font {
+        border-radius: $border-rad_10;
+        cursor: pointer;
+
+        &.focus-visible {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    box-shadow: 0 0 0 0.2rem (map-get($map, brandFocus));
+                }
+            }
+        }
+    }
+
+    .font:hover,
+    .sub-link:hover {
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: darken(map-get($map, brandBackground), 10%);
+            }
+        }
+    }
+
+    .font,
+    .subparagraph {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: $indent-md;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+        .font-block-hover {
+            display: none;
+        }
+    }
+
+    .list-name {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        margin-left: $indent-lg;
+        font-size: $indent-md;
+        text-overflow: clip;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                color: map-get($map, brandPantonText);
+            }
+        }
+
+        &__title {
+            text-align-last: left;
+        }
+
+        &__sales {
+            display: flex;
+            align-items: center;
+            font-size: $fz-sm;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    color: map-get($map, brandPantonBlue);
+                }
+            }
+
+            &::before {
+                content: '';
+                width: 5px;
+                height: 5px;
+                display: block;
+                margin-right: 3px;
+                border-radius: 50%;
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        background: map-get($map, brandPantonBlue);
+                    }
+                }
+            }
+        }
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            right: 0;
+            transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+            background-size: contain;
+
+            svg {
+                width: 24px;
+                height: 24px;
+                transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        fill: map-get($map, brandPantonText);
+                    }
+                }
+            }
+        }
+
+        &__icon.turn {
+            transform: rotate(-180deg);
+        }
+    }
+
+    .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+        svg {
+            width: $indent-lg;
+            height: $indent-lg;
+            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    fill: map-get($map, brandPantonText);
+                }
+            }
+
+            path {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        fill: map-get($map, brandPantonText);
+                    }
+                }
+            }
+        }
+    }
+
+    .active-page {
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, brandPantonBlue);
+                box-shadow: 0 10px 10px 0 map-get($map, brandBoxShadow);
+            }
+        }
+
+        .font:hover {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, brandPantonBlue);
+                }
+            }
+        }
+
+        .font,
+        .subparagraph {
+            .icon {
+                svg {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: $white;
+                        }
+                    }
+
+                    path {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                fill: $white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .list-name {
+                &__title {
+                    .p--md--normal {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .list-name__sales {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        color: map-get($map, white);
+                    }
+                }
+
+                &::before {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            background: map-get($map, white);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.side.hidden {
+    justify-content: flex-end;
+    animation: sidenavAnim2 0.25s forwards;
+
+    .side__top {
+        width: auto;
+        position: absolute;
+        height: calc(100vh - 80px);
+        padding-bottom: 64px;
+        overflow: auto;
+
+        &:hover {
+            width: 100%;
+        }
+    }
+
+    .show {
+        .font {
+            border-radius: $border-rad_10;
+        }
+
+        .submenu {
+            display: none;
+        }
+    }
+
+    .font {
+        border-radius: $border-rad_10;
+
+        .list-name {
+            width: 0%;
+            margin: 0;
+        }
+    }
+
+    .nav-link {
+        width: 50px;
+        position: relative;
+    }
+
+    div.nav-link:hover {
+        width: 63px;
+    }
+
+    div.nav-link:hover {
+        display: flex;
+        margin-right: 0;
+        border-right-width: 0;
+        border-radius: 10px 0 0 10px;
+
+        .font {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .submenu {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 100%;
+            top: -1px;
+            border: 1px solid;
+            border-radius: 0 10px 10px 0;
+            z-index: 101;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, white);
+                    border-color: map-get($map, brandBackground);
+                    box-shadow: 0 10px 10px 0 map-get($map, brandBoxShadow);
+                }
+            }
+
+            .sub-link {
+                display: block;
+                transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+
+                &.active-page {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            background: map-get($map, brandPantonBlue);
+                        }
+                    }
+                }
+
+                &.focus-visible {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            box-shadow: 0 0 0 0.2rem map-get($map, brandFocus);
+                        }
+                    }
+                }
+
+                &:first-child {
+                    border-radius: 0 10px 0 0;
+                }
+
+                &:last-child {
+                    border-radius: 0 0 10px 0;
+                }
+
+                & > *:only-child {
+                    border-radius: 0 10px 10px 0;
+                }
+            }
+
+            .subparagraph {
+                position: relative;
+                padding: $indent-md 40px;
+
+                .list-name__icon {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .submenu {
+        display: none;
+
+        .subparagraph {
+            padding: 0;
+        }
+    }
+
+    .nav--active {
+        .font {
+            .icon {
+                svg {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonBlue);
+                        }
+                    }
+
+                    path {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                fill: map-get($map, brandPantonBlue);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.show {
+    &.nav-link {
+        & > *:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+
+        & > *:last-child {
+            & > *:last-child {
+                border-radius: 0 0 10px 10px;
+            }
+        }
+
+        & > *:only-child {
+            border-radius: $border-rad_10;
+        }
+    }
+
+    .submenu {
+        display: block;
+    }
+}
+
+@keyframes sidenavAnim2 {
+    0% {
+        min-width: 320px;
+        max-width: 320px;
+    }
+    100% {
+        min-width: 78px;
+        max-width: 78px;
+    }
+}
+
+@keyframes sidenavAnim1 {
+    0% {
+        min-width: 78px;
+        max-width: 78px;
+    }
+    100% {
+        min-width: 320px;
+        max-width: 320px;
+    }
+}

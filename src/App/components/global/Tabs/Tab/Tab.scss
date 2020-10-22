@@ -1,0 +1,31 @@
+@import '../../../../../assets/styles/utils/mixin';
+
+.tab {
+    //width: 100%;
+    text-align: center;
+    margin: 5px;
+    cursor: pointer;
+    padding: $indent-sm $indent-sm;
+    border-color: $white;
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    cursor: pointer;
+
+    &:last-child {
+        margin-right: $indent-sm;
+    }
+
+    &__content {
+        padding-top: $indent-md;
+    }
+
+    &.active {
+        border-width: 0 0 3px 0;
+        border-style: solid;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                border-color: map-get($map, brandPantonBlue);
+            }
+        }
+    }
+}
