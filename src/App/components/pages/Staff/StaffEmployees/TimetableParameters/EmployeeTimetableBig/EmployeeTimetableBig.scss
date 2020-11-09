@@ -1,247 +1,30 @@
 @import '../../../../../../../assets/styles/utils/mixin';
 
-.big__timetable {
-    &__wrapper {
+.timetable--big.timetable__wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    .controls {
+        padding-left: 40px;
+        margin-top: 0;
+    }
+
+    .timetable__codes {
         display: flex;
         flex-direction: column;
-        place-items: center;
-        position: relative;
+        justify-content: flex-start;
+        padding-left: 40px;
+        padding-top: 4px;
+        height: 100%;
+        width: 400px;
 
-        .ruler {
-            display: block;
-            position: absolute;
-            left: 40px;
-            width: 480px;
-            height: 1px;
-            @each $theme, $map in $themes {
-                .#{$theme} & {
-                    background-color: map-get($map, brandTimeTableRuler);
-                }
-            }
+        &__dates {
+            font-weight: 600;
+            font-size: 16px;
+        }
 
-            &.ruler--one {
-                top: 120px;
-            }
-
-            &.ruler--two {
-                top: 190px;
-            }
-
-            &.ruler--three {
-                top: 260px;
-            }
-
-            &.ruler--four {
-                top: 330px;
-            }
+        &__header {
+            margin-top: 15px;
         }
     }
-
-    &__header {
-        @include _p--md;
-        text-align: center;
-    }
-
-    &__calendar {
-        display: flex;
-        max-width: 560px;
-        flex-wrap: wrap;
-        .calendar {
-            &__spacer {
-                display: block;
-                width: 50px;
-                height: 50px;
-            }
-
-            &__weekdays {
-                @include _p--sm;
-                display: flex;
-                width: 490px;
-                height: 50px;
-
-                &__day {
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 70px;
-                    height: 70px;
-                    @each $theme, $map in $themes {
-                        .#{$theme} & {
-                            color: map-get($map, brandPantonSubText);
-                        }
-                    }
-                }
-            }
-
-            &__weeknumbers {
-                @include _p--sm;
-                display: flex;
-                flex-direction: column;
-                height: 350px;
-                width: 50px;
-
-                &__number {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 70px;
-                    height: 70px;
-                    @each $theme, $map in $themes {
-                        .#{$theme} & {
-                            color: map-get($map, brandPantonSubText);
-                        }
-                    }
-                }
-            }
-
-            &__body {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                align-items: center;
-                height: 350px;
-                width: 490px;
-                & > .day {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: space-around;
-                    width: 70px;
-                    height: 70px;
-                    transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-                    @each $theme, $map in $themes {
-                        .#{$theme} & {
-                            color: map-get($map, brandTimeTableDay);
-                        }
-                    }
-
-                    &.mark--incorrect::before {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        // height: 5px;
-                        // width: 5px;
-                        // background-color: red;
-                        width: 0px;
-                        height: 0px;
-                        border-top: 7px solid transparent;
-                        border-right: 7px solid transparent;
-                        border-left: 7px solid transparent;
-                        transform: rotate(-135deg);
-                        margin: -7px;
-                        @each $theme, $map in $themes {
-                            .#{$theme} & {
-                                border-bottom: 7px solid map-get($map, brandPantonRed);
-                            }
-                        }
-                    }
-
-                    &.mark--holiday::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        width: 0px;
-                        height: 0px;
-                        border-right: 7px solid transparent;
-                        border-bottom: 7px solid transparent;
-                        border-left: 7px solid transparent;
-                        transform: rotate(-135deg);
-                        margin: -7px;
-                        @each $theme, $map in $themes {
-                            .#{$theme} & {
-                                border-top: 7px solid map-get($map, brandPantonBlue);
-                            }
-                        }
-                    }
-
-                    .day__hours {
-                        font-size: 14px;
-                        font-weight: 500;
-                        @each $theme, $map in $themes {
-                            .#{$theme} & {
-                                color: map-get($map, brandTimeTableDay);
-                            }
-                        }
-
-                        &.good {
-                            @each $theme, $map in $themes {
-                                .#{$theme} & {
-                                    color: map-get($map, brandPantonGreen);
-                                }
-                            }
-                        }
-
-                        &.bad {
-                            @each $theme, $map in $themes {
-                                .#{$theme} & {
-                                    color: map-get($map, brandPantonRed);
-                                }
-                            }
-                        }
-                    }
-
-                    .day__number {
-                        @include _p--md;
-                        font-weight: 400;
-
-                        &.current {
-                            font-weight: 500;
-                        }
-                    }
-
-                    &.weekend {
-                        @each $theme, $map in $themes {
-                            .#{$theme} & {
-                                color: map-get($map, brandTimeTableWeekend);
-                            }
-                        }
-                    }
-
-                    & > .sign {
-                        position: absolute;
-                        top: 3px;
-                        left: 3px;
-                        font-size: 8px;
-                    }
-
-                    & > .sign2 {
-                        // position: absolute;
-                        // bottom: 3px;
-                        // left: 3px;
-                        font-size: 8px;
-                        align-self: flex-start;
-                        /* padding: 0px; */
-                        margin: 0 0 3px 3px;
-                    }
-
-                    & > .sign3 {
-                        position: absolute;
-                        top: 3px;
-                        right: 3px;
-                        font-size: 8px;
-                    }
-                    &:hover {
-                        justify-content: space-around;
-                        transform: scale(1.2);
-                        border-radius: 10px;
-                        z-index: 100;
-                        @each $theme, $map in $themes {
-                            .#{$theme} & {
-                                background-color: map-get($map, white);
-                                box-shadow: 0px 2px 12px map-get($map, brandBoxShadow);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-.p-menuitem-link {
-    padding: 7px;
 }

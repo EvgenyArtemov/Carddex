@@ -82,6 +82,16 @@
             &:first-child {
                 margin-top: 0;
             }
+
+            &.corrected {
+                flex-direction: row;
+                align-items: center;
+
+                & > h4 {
+                    margin-right: 7px;
+                    margin-bottom: 0;
+                }
+            }
         }
     }
 
@@ -97,7 +107,7 @@
         padding-bottom: $indent-md;
         //border-bottom: 1px solid black;
         line-height: 14px;
-        font-weight: 600;
+        font-weight: 500;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
     }
 

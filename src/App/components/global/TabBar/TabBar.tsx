@@ -1,44 +1,84 @@
-import React, { useState, useEffect, useLayoutEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useMemo, memo } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
+import { State } from 'App/../redux/store';
+import { usePrevious } from 'App/../hooks/usePrevious/usePrevious';
 import { LetIn } from 'App/../assets/images/bx-chevron-left';
 import { TabbarState } from './tabBarType';
 import './TabBar.scss';
 
 const TabBarInner = (props: TabbarState) => {
+    const [tabPosition, setTabPosition] = useState(0);
+    const prevTabPosition = usePrevious(tabPosition);
+    const [marckerLeft, setMarckerLeft] = useState(0);
+    const [marckerWidth, setMarckerWidth] = useState(0);
     const [isShownButtons, setIsShownButtons] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [sizeWindow, setSizeWindow] = useState(0);
     const [difference, setDifference] = useState(0);
     const tabs = useRef<HTMLDivElement>(null);
-    const tab = useRef<HTMLButtonElement>(null);
+    const tabsArr: HTMLButtonElement[] = useMemo(() => [], []);
+    const tabTitle = useRef<HTMLDivElement>(null);
     const marcker = useRef<HTMLDivElement>(null);
     const rightButton = useRef<HTMLButtonElement>(null);
     const leftButton = useRef<HTMLButtonElement>(null);
-    const buttonBias = useRef(200);
+    const buttonBias = useRef(100);
+    const { windowSize } = useSelector((state: State) => state.app, shallowEqual);
+
+    const renderCounter = useRef(0);
 
     useEffect(() => {
-        marcker.current!.setAttribute(
-            'style',
-            `left:${
-                props.tabPosition === 1
-                    ? props.tabPosition * 0 + 14
-                    : (props.tabPosition - 1) * 150 + 14 * props.tabPosition
-            }px;`
-        );
-    }, [props.tabPosition]);
+        renderCounter.current += 1;
+
+        if (tabPosition === 0 && renderCounter.current <= 1) {
+            setMarckerLeft(tabsArr[tabPosition].offsetLeft);
+
+            setMarckerWidth(tabsArr[tabPosition].offsetWidth);
+        } else if (tabPosition > prevTabPosition!) {
+            setMarckerWidth(
+                prevTabPosition! === 0
+                    ? tabsArr[tabPosition].offsetLeft + tabsArr[tabPosition].offsetWidth
+                    : tabsArr[tabPosition].offsetLeft +
+                          tabsArr[tabPosition].offsetWidth -
+                          tabsArr[prevTabPosition!].offsetLeft
+            );
+        } else if (tabPosition < prevTabPosition!) {
+            setMarckerLeft(tabsArr[tabPosition].offsetLeft);
+
+            setMarckerWidth(
+                tabsArr[prevTabPosition!].offsetLeft +
+                    tabsArr[prevTabPosition!].offsetWidth -
+                    tabsArr[tabPosition].offsetLeft
+            );
+        }
+    }, [tabPosition, prevTabPosition, tabsArr]);
 
     const removeAnim = () => {
-        marcker.current?.classList.remove('tabbar__tabs-marcker--animation');
+        marcker.current?.classList.remove('tabbar-bar__tabs-marcker--animation');
     };
 
     const tabClick = (id: number) => {
-        if (props.tabPosition !== id) {
-            props.setTab(id);
-            marcker.current?.classList.add('tabbar__tabs-marcker--animation');
-            document.querySelector(`.tabbar__tabs-${id}`)?.scrollIntoView({
+        if (tabPosition !== id) {
+            setTabPosition(id);
+
+            marcker.current?.classList.add('tabbar-bar__tabs-marcker--animation');
+
+            document.querySelector(`.tabbar-bar__tabs-${id}`)?.scrollIntoView({
                 behavior: 'smooth',
                 inline: 'center'
             });
         }
+    };
+
+    const onAnimEnd = () => {
+        if (tabPosition < prevTabPosition!) {
+            setMarckerWidth(tabsArr[tabPosition!].offsetWidth);
+        } else {
+            setMarckerLeft(tabsArr[tabPosition].offsetLeft);
+
+            setMarckerWidth(tabsArr[tabPosition].offsetWidth);
+        }
+
+        removeAnim();
+        setScrollPosition(tabs.current!.scrollLeft);
     };
 
     const leftButtonClick = () => {
@@ -86,8 +126,6 @@ const TabBarInner = (props: TabbarState) => {
     };
 
     const onWheel = (e: React.WheelEvent) => {
-        // e.preventDefault();
-
         if (scrollPosition + e.deltaY < difference) {
             if (scrollPosition + e.deltaY <= 0) {
                 setScrollPosition(0);
@@ -104,16 +142,6 @@ const TabBarInner = (props: TabbarState) => {
     };
 
     useLayoutEffect(() => {
-        function updateSize() {
-            setSizeWindow(window.innerWidth);
-        }
-        window.addEventListener('resize', updateSize);
-        updateSize();
-
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
-
-    useLayoutEffect(() => {
         if (tabs.current?.offsetWidth! < tabs.current?.scrollWidth!) {
             setIsShownButtons(true);
         } else {
@@ -121,57 +149,68 @@ const TabBarInner = (props: TabbarState) => {
         }
 
         setDifference(tabs.current!.scrollWidth - tabs.current!.clientWidth);
+
         setScrollPosition(tabs.current!.scrollLeft);
-    }, [sizeWindow, props.trigger]);
+    }, [windowSize, props.trigger, isShownButtons, tabPosition]);
 
     return (
         <div className="tabbar">
-            {isShownButtons && (
-                <button
-                    ref={leftButton}
-                    type="button"
-                    className={`tabbar__lef-button ${scrollPosition <= 0 && 'tabbar__lef-button--disable'}`}
-                    onClick={leftButtonClick}
-                >
-                    <LetIn />
-                </button>
-            )}
-            <div ref={tabs} className="tabbar__tabs" onWheel={onWheel}>
-                {props.tabs.map((elem) => {
-                    return (
-                        <button
-                            key={elem.index}
-                            ref={tab}
-                            className={`tabbar__tabs-item tabbar__tabs-${elem.index}`}
-                            type="button"
-                            onClick={() => tabClick(elem.index)}
-                        >
-                            <div className="p--md--normal">{elem.name}</div>
-                        </button>
-                    );
-                })}
-                <div
-                    ref={marcker}
-                    className="tabbar__tabs-marcker"
-                    onAnimationEnd={() => {
-                        removeAnim();
-                        setScrollPosition(tabs.current!.scrollLeft);
-                    }}
-                />
+            <div className="tabbar__bar tabbar-bar">
+                {isShownButtons && (
+                    <button
+                        ref={leftButton}
+                        type="button"
+                        className={`tabbar-bar__lef-button ${scrollPosition <= 0 && 'tabbar-bar__lef-button--disable'}`}
+                        onClick={leftButtonClick}>
+                        <LetIn />
+                    </button>
+                )}
+
+                <div ref={tabs} className="tabbar-bar__tabs" onWheel={onWheel}>
+                    {React.Children.map(props.children, (elem) => {
+                        return (
+                            <button
+                                key={elem.props.index}
+                                ref={(e: HTMLButtonElement) => {
+                                    tabsArr[elem.props.index] = e;
+                                }}
+                                className={`tabbar-bar__tabs-item tabbar-bar__tabs-${elem.props.index}`}
+                                type="button"
+                                onClick={() => tabClick(elem.props.index)}>
+                                <div ref={tabTitle} className="p--md--normal">
+                                    {elem.props.header}
+                                </div>
+                            </button>
+                        );
+                    })}
+
+                    <div
+                        ref={marcker}
+                        style={{
+                            left: `${marckerLeft}px`,
+                            width: `${marckerWidth}px`
+                        }}
+                        className="tabbar-bar__tabs-marcker"
+                        onAnimationEnd={onAnimEnd}
+                    />
+                </div>
+
+                {isShownButtons! && (
+                    <button
+                        ref={rightButton}
+                        type="button"
+                        className={`tabbar-bar__right-button ${
+                            scrollPosition === difference && 'tabbar-bar__right-button--disable'
+                        }`}
+                        onClick={rightButtonClick}>
+                        <LetIn />
+                    </button>
+                )}
             </div>
 
-            {isShownButtons! && (
-                <button
-                    ref={rightButton}
-                    type="button"
-                    className={`tabbar__right-button ${
-                        scrollPosition === difference && 'tabbar__right-button--disable'
-                    }`}
-                    onClick={rightButtonClick}
-                >
-                    <LetIn />
-                </button>
-            )}
+            <div className="tabbar__content">
+                {Array.isArray(props.children) ? props.children[tabPosition] : props.children}
+            </div>
         </div>
     );
 };

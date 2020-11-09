@@ -1,0 +1,383 @@
+[
+    {
+        "id": "1",
+        "equipType": "Турникеты",
+        "equipCount": 4,
+        "equipDital": [
+            {
+                "id": "11",
+                "equipName": "Турникет №1",
+                "equipPort": "COM1",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 12,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "12",
+                "equipName": "Турникет №2",
+                "equipPort": "COM2",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 15,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "13",
+                "equipName": "Турникет №3",
+                "equipPort": "COM3",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 2",
+                "equipPassCount": 7,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "14",
+                "equipName": "Турникет №4",
+                "equipPort": "COM4",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 31,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "equipType": "Шлагбаумы",
+        "equipCount": 4,
+        "equipDital": [
+            {
+                "id": "11",
+                "equipName": "Шлагбаум №1",
+                "equipPort": "COM5",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 3",
+                "equipPassCount": 12,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "12",
+                "equipName": "Шлагбаум №2",
+                "equipPort": "COM6",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 3",
+                "equipPassCount": 15,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "13",
+                "equipName": "Шлагбаум №3",
+                "equipPort": "COM7",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 3",
+                "equipPassCount": 7,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "14",
+                "equipName": "Шлагбаум №8",
+                "equipPort": "COM5",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 31,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "equipType": "Дверные контроллеры",
+        "equipCount": 4,
+        "equipDital": [
+            {
+                "id": "11",
+                "equipName": "Дверной контроллер №1",
+                "equipPort": "COM9",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 9",
+                "equipPassCount": 92,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "12",
+                "equipName": "Дверной контроллер №10",
+                "equipPort": "COM10",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 15,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "13",
+                "equipName": "Дверной контроллер №11",
+                "equipPort": "COM11",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 2",
+                "equipPassCount": 7,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "14",
+                "equipName": "Дверной контроллер №12",
+                "equipPort": "COM12",
+                "equipSpeed": 3800,
+                "equipGroup": "Группа 1",
+                "equipPassCount": 31,
+                "modules": [
+                    {
+                        "id": "101",
+                        "modulesConrolName": "Имя модуля",
+                        "controlArr": [
+                            {
+                                "id": "10001",
+                                "controlModuleName": "Модуль контроля №1"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "102",
+                        "modulesIdentName": "Имя модуля",
+                        "identArr": [
+                            {
+                                "id": "10001",
+                                "identModuleName": "Модуль идентификации №1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

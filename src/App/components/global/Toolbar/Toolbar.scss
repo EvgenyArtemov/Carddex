@@ -5,7 +5,7 @@
     display: flex;
     padding: $indent-sm 0;
     transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-    z-index: 100;
+    z-index: 2;
     @each $theme, $map in $themes {
         .#{$theme} & {
             background: map-get($map, borderColor);
@@ -23,8 +23,19 @@
             }
         }
 
+        &--alarm {
+            flex: 1 100%;
+            justify-content: flex-end;
+        }
+
         & > *:nth-child(n) {
             margin-right: $indent-sm;
+        }
+
+        &:last-child {
+            &>*:last-child {
+                margin: 0;
+            }
         }
     }
 
@@ -36,7 +47,7 @@
     &__content {
         width: 100%;
         display: flex;
-        padding: 0 $indent-md;
+        padding: 0 $indent-sm;
 
         &__search {
             margin-left: auto !important;

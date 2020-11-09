@@ -1,6 +1,6 @@
 import { EmployeeTimetableState, GET_EMPLOYEE_TIMETABLE, EmployeeTimetableActions } from './employeeTimetableTypes';
 
-const initialState = {
+const initialState: EmployeeTimetableState = {
     timetable: null
 };
 

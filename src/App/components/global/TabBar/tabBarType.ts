@@ -1,9 +1,6 @@
+import { TabState } from './Tab/tabbarTabType';
+
 export interface TabbarState {
-    tabPosition: number;
-    setTab: (property: number) => void;
-    tabs: {
-        index: number;
-        name: string;
-    }[];
+    children: React.ReactElement<TabState>[] | React.ReactElement<TabState>;
     trigger?: boolean;
 }

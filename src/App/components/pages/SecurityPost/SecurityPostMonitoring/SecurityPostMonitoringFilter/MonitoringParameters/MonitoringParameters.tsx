@@ -1,9 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import { Menu } from 'primereact/menu';
-import { ListBox } from 'primereact/listbox';
-import { Checkbox } from 'primereact/checkbox';
-import { Button } from 'primereact/button';
 import { GeneralPage } from './GeneralPage/GeneralPage';
 import { AutoUpdate } from './AutoUpdatePage/AutoUpdate';
 import { Categories } from './CategoriesPage/Categories';
@@ -20,7 +17,11 @@ export const MonitoringParameters = () => {
 
     const menuItems = [
         { label: 'Общее', icon: 'pi pi-list', command: onMenuClick },
-        { label: 'Автообновление', icon: 'pi pi-refresh', command: onMenuClick },
+        {
+            label: 'Автообновление',
+            icon: 'pi pi-refresh',
+            command: onMenuClick
+        },
         { label: 'Категории', icon: 'pi pi-sort-alt', command: onMenuClick },
         { label: 'Классы', icon: 'pi pi-sort-alt', command: onMenuClick },
         { label: 'Коды', icon: 'pi pi-sort-numeric-up', command: onMenuClick },

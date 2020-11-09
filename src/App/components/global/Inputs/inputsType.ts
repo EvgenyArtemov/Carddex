@@ -1,14 +1,20 @@
 export interface InputsType {
     name: string;
-    onInputChange: (property: string) => void;
+    onInputChange: (
+        property: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
     type: string;
     value: string;
-    required?: boolean;
-    error?: boolean;
+    className?: string;
     label?: string;
     placeholder?: string;
-    classNmae?: string;
+    required?: boolean;
+    disabled?: boolean;
+    error?: boolean;
     icon?: boolean;
+    min?: number;
+    max?: number;
+    list?: string[];
     validation?: string;
     validationTitle?: string;
     validationWarning?: (property: string) => void;

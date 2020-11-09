@@ -1,19 +1,18 @@
-import { 
+import {
     SecurityAttendanceState,
     SecurityAttendanceActions,
     SECURITY_ATTENDANCE_TOGGLE_SIDEBAR,
-    GET_SECURITY_ATTENDANCE
+    GET_SECURITY_ATTENDANCE,
+    SECURITY_ATTENDANCE_QUICK_FILTER
 } from './securityAttendanceTypes';
 
 const initialState: SecurityAttendanceState = {
     sidebarOpened: false,
-    attendanceTable: []
+    attendanceTable: [],
+    quickFilter: false
 };
 
-const appReducer = (
-    state = initialState,
-    action: SecurityAttendanceActions
-): SecurityAttendanceState => {
+const appReducer = (state = initialState, action: SecurityAttendanceActions): SecurityAttendanceState => {
     switch (action.type) {
         case SECURITY_ATTENDANCE_TOGGLE_SIDEBAR:
             return {
@@ -24,6 +23,11 @@ const appReducer = (
             return {
                 ...state,
                 attendanceTable: action.payload
+            };
+        case SECURITY_ATTENDANCE_QUICK_FILTER:
+            return {
+                ...state,
+                quickFilter: !state.quickFilter
             };
         default:
             return state;

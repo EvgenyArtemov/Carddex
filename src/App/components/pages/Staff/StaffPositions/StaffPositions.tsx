@@ -11,10 +11,10 @@ import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import addProps from 'App/components/global/Modal/templates/addProps';
-import editProps from 'App/components/global/Modal/templates/editProps';
-import deleteProps from 'App/components/global/Modal/templates/deleteProps';
-import deleteText from 'App/components/global/Modal/templates/deleteText';
+import addProps from 'App/components/global/Modal/Dialog/AddModal/addProps';
+import editProps from 'App/components/global/Modal/Dialog/EditModal/editProps';
+import deleteProps from 'App/components/global/Modal/Alert/DeleteModal/deleteProps';
+import deleteText from 'App/components/global/Modal/Alert/DeleteModal/deleteText';
 import { StaffPosition } from 'redux/Staff/StaffPositions/staffPositionsTypes';
 import positions from './fakeData';
 import { Popover } from '../../../global/Popover/Popover';
@@ -75,7 +75,11 @@ const StaffPositions = () => {
                     onClick={() => openModal('delete', history)}
                 />
                 {/* Right side */}
-                <ToolbarSearch value={search} onChange={(e) => setSearch(e.target.value)} onCrossClick={clearSearch} />
+                <ToolbarSearch
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onCrossClick={clearSearch}
+                />
             </Toolbar>
 
             <div className="table-wrapper">
@@ -92,11 +96,24 @@ const StaffPositions = () => {
                             selectionMode="single"
                             selection={selectedRow}
                             onSelectionChange={(e) => setSelectedRow(e.value)}
-                            onRowDoubleClick={() => history.push(`${window.location.pathname}/edit`)}
-                        >
-                            <Column field="name" header="Наименование" sortable />
-                            <Column field="count" header="Число сотрудников" sortable />
-                            <Column field="isDeleted" header="Статус удаления" sortable />
+                            onRowDoubleClick={() =>
+                                history.push(`${window.location.pathname}/edit`)
+                            }>
+                            <Column
+                                field="name"
+                                header="Наименование"
+                                sortable
+                            />
+                            <Column
+                                field="count"
+                                header="Число сотрудников"
+                                sortable
+                            />
+                            <Column
+                                field="isDeleted"
+                                header="Статус удаления"
+                                sortable
+                            />
                         </DataTable>
                     </div>
                 </Popover>
@@ -109,8 +126,7 @@ const StaffPositions = () => {
                 {...addProps}
                 onSuccessClick={() => console.log('123')}
                 modalHeader="Добавление должности"
-                modalName="add"
-            >
+                modalName="add">
                 <div>
                     <span>Add</span>
                 </div>
@@ -121,8 +137,7 @@ const StaffPositions = () => {
                 {...editProps}
                 onSuccessClick={() => console.log('123')}
                 modalHeader="Редактирование должности"
-                modalName="edit"
-            >
+                modalName="edit">
                 <div>
                     <span>Edit</span>
                 </div>
@@ -135,8 +150,7 @@ const StaffPositions = () => {
                 {...deleteProps}
                 onSuccessClick={() => console.log('123')}
                 modalHeader="Удаление должности"
-                modalName="delete"
-            >
+                modalName="delete">
                 {selectedRow ? (
                     <span>{deleteText(`должность ${selectedRow.name}`)}</span>
                 ) : (

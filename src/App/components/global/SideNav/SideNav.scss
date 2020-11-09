@@ -1,7 +1,6 @@
 @import '../../../../assets/styles/utils/mixin';
 
 .side {
-    min-width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -15,7 +14,8 @@
     }
 
     &.shown {
-        animation: sidenavAnim1 0.25s forwards;
+        min-width: 320px;
+        max-width: 320px;
     }
 
     &__top {
@@ -69,20 +69,17 @@
 
     .submenu {
         display: none;
+        border-radius: 0 0 $border-rad_10 $border-rad_10;
         @each $theme, $map in $themes {
             .#{$theme} & {
                 border-top: 1px solid (map-get($map, brandBackground));
+                background: map-get($map, brandBackground);
             }
         }
 
         .sub-link {
             display: block;
             transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-            @each $theme, $map in $themes {
-                .#{$theme} & {
-                    background: map-get($map, brandBackground);
-                }
-            }
 
             &.active-page {
                 @each $theme, $map in $themes {
@@ -96,6 +93,7 @@
                 @each $theme, $map in $themes {
                     .#{$theme} & {
                         box-shadow: 0 0 0 0.2rem (map-get($map, brandFocus));
+                        z-index: 100;
                     }
                 }
             }
@@ -236,14 +234,6 @@
                     fill: map-get($map, brandPantonText);
                 }
             }
-
-            path {
-                @each $theme, $map in $themes {
-                    .#{$theme} & {
-                        fill: map-get($map, brandPantonText);
-                    }
-                }
-            }
         }
     }
 
@@ -316,7 +306,8 @@
 
 .side.hidden {
     justify-content: flex-end;
-    animation: sidenavAnim2 0.25s forwards;
+    min-width: 78px;
+    max-width: 78px;
 
     .side__top {
         width: auto;
@@ -479,27 +470,5 @@
 
     .submenu {
         display: block;
-    }
-}
-
-@keyframes sidenavAnim2 {
-    0% {
-        min-width: 320px;
-        max-width: 320px;
-    }
-    100% {
-        min-width: 78px;
-        max-width: 78px;
-    }
-}
-
-@keyframes sidenavAnim1 {
-    0% {
-        min-width: 78px;
-        max-width: 78px;
-    }
-    100% {
-        min-width: 320px;
-        max-width: 320px;
     }
 }

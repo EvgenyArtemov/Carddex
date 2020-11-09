@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useLayoutEffect, useRef, useEffect, memo } from 'react';
+import React, { useState, useCallback, useRef, useEffect, memo } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
+import { State } from 'App/../redux/store';
 import { CustomScrollbarState } from './customScrollbarType';
 import './CustomScrollbar.scss';
 
@@ -9,24 +11,14 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
     const [lastScrollThumbPosition, setScrollThumbPosition] = useState(0);
     const [isDragging, setDragging] = useState(false);
     const [ifScrollAreaSmall, setIfScrollAreaSmall] = useState(true);
-    const [sizeWindow, setSizeWindow] = useState({ width: 0, height: 0 });
     const scrollHostRef = useRef<HTMLDivElement>(null);
     const hoverScrollBar = useRef(false);
     const marginScrollThumb = 10;
 
-    /* Catching changes of window size, and rerender component */
-    useLayoutEffect(() => {
-        function updateSize() {
-            setSizeWindow({
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
-        }
-        window.addEventListener('resize', updateSize);
-        updateSize();
-
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
+    const { windowSize } = useSelector(
+        (state: State) => state.app,
+        shallowEqual
+    );
 
     /* Catching mouse on enter in block with custom scroll */
     const handleMouseOver = useCallback(() => {
@@ -60,14 +52,22 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
             if (isDragging) {
                 e.preventDefault();
                 e.stopPropagation();
+
                 const scrollHostElement = scrollHostRef.current;
                 const { scrollHeight, offsetHeight } = scrollHostElement!;
                 const deltaY = e.clientY - lastScrollThumbPosition;
-                const percentage = deltaY * (scrollHeight / (offsetHeight - marginScrollThumb));
+                const percentage =
+                    deltaY *
+                    (scrollHeight / (offsetHeight - marginScrollThumb));
+
                 setScrollThumbPosition(e.clientY);
                 setScrollBoxTop(
-                    Math.min(Math.max(0, scrollBoxTop + deltaY), offsetHeight - marginScrollThumb - scrollBoxHeight)
+                    Math.min(
+                        Math.max(0, scrollBoxTop + deltaY),
+                        offsetHeight - marginScrollThumb - scrollBoxHeight
+                    )
                 );
+
                 scrollHostElement!.scrollTop = Math.min(
                     scrollHostElement!.scrollTop + percentage,
                     scrollHeight - (offsetHeight - marginScrollThumb)
@@ -81,9 +81,10 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
     const handleScrollThumbMouseDown = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
+
         setScrollThumbPosition(e.clientY);
         setDragging(true);
-        console.log('handleScrollThumbMouseDown');
+
         hoverScrollBar.current = true;
     }, []);
 
@@ -108,13 +109,16 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
 
         if (eventOffsetY < scrollTop) {
             scrollHostElement!.scrollTo({
-                top: eventOffsetY * (scrollHeight / (offsetHeight - marginScrollThumb)),
+                top:
+                    eventOffsetY *
+                    (scrollHeight / (offsetHeight - marginScrollThumb)),
                 behavior: 'smooth'
             });
         } else {
             scrollHostElement!.scrollTo({
                 top:
-                    eventOffsetY * (scrollHeight / (offsetHeight - marginScrollThumb)) -
+                    eventOffsetY *
+                        (scrollHeight / (offsetHeight - marginScrollThumb)) -
                     (offsetHeight - marginScrollThumb),
                 behavior: 'smooth'
             });
@@ -129,12 +133,18 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
 
         const scrollHostElement = scrollHostRef.current;
         const { scrollTop, scrollHeight, offsetHeight } = scrollHostElement!;
-        let newTop = (scrollTop / scrollHeight) * (offsetHeight - marginScrollThumb);
-        newTop = Math.min(newTop, offsetHeight - marginScrollThumb - scrollBoxHeight);
+        let newTop =
+            (scrollTop / scrollHeight) * (offsetHeight - marginScrollThumb);
+
+        newTop = Math.min(
+            newTop,
+            offsetHeight - marginScrollThumb - scrollBoxHeight
+        );
+
         setScrollBoxTop(newTop);
     }, [scrollBoxHeight]);
 
-    /* Render and rerender custome scrollbar */
+    /* Render and rerender custom scrollbar */
     useEffect(() => {
         const scrollHostElement = scrollHostRef.current;
         const { offsetHeight, scrollHeight } = scrollHostElement!;
@@ -145,16 +155,25 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
             setIfScrollAreaSmall(true);
         }
 
-        const scrollThumbPercentage = (offsetHeight - marginScrollThumb) / scrollHeight;
-        const scrollThumbHeight = Math.max(scrollThumbPercentage * offsetHeight, 50);
+        const scrollThumbPercentage =
+            (offsetHeight - marginScrollThumb) / scrollHeight;
+        const scrollThumbHeight = Math.max(
+            scrollThumbPercentage * offsetHeight,
+            50
+        );
 
         setScrollBoxHeight(scrollThumbHeight);
+
         scrollHostElement!.addEventListener('scroll', handleScroll, true);
 
         return () => {
-            scrollHostElement!.removeEventListener('scroll', handleScroll, true);
+            scrollHostElement!.removeEventListener(
+                'scroll',
+                handleScroll,
+                true
+            );
         };
-    }, [sizeWindow, handleScroll, props.trigger]);
+    }, [windowSize, handleScroll, props.trigger]);
 
     /* Setting up and clearing an event listener for catching interactions with the scroll bar */
     useEffect(() => {
@@ -175,17 +194,18 @@ const CustomScrollbarInner = (props: CustomScrollbarState) => {
             onMouseOver={handleMouseOver}
             onFocus={() => console.log('Focus')}
             onMouseOut={handleMouseOut}
-            onBlur={() => console.log('Blur')}
-        >
+            onBlur={() => console.log('Blur')}>
             <div ref={scrollHostRef} className="scrollhost">
                 {props.children}
             </div>
+
             {ifScrollAreaSmall && (
                 <div
-                    className={`scroll-bar${hovering ? ' shown' : ''}${hoverScrollBar.current ? ' hover' : ''}`}
+                    className={`scroll-bar${hovering ? ' shown' : ''}${
+                        hoverScrollBar.current ? ' hover' : ''
+                    }`}
                     onWheel={scrollCatch}
-                    onMouseDown={scrolTo}
-                >
+                    onMouseDown={scrolTo}>
                     <div
                         className="scroll-thumb"
                         style={{ height: scrollBoxHeight, top: scrollBoxTop }}

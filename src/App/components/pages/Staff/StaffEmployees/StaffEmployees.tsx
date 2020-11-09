@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Toolbar } from 'App/components/global/Toolbar/Toolbar';
 import { Buttons } from 'App/components/global/Buttons/Buttons';
@@ -10,176 +9,77 @@ import { Column } from 'primereact/column';
 import Modal from 'App/components/global/Modal/Modal';
 import openModal from 'utils/openModal/openModal';
 import { TimetableParameters } from 'App/components/pages/Staff/StaffEmployees/TimetableParameters/TimetableParameters';
-import TableBottomCounter from 'App/components/global/TableBottomCounter/TableBottomCounter';
+import { TableBottomCounter } from 'App/components/global/TableBottomCounter/TableBottomCounter';
 import EmployeeDetails from 'App/components/pages/Staff/StaffEmployees/EmployeeDetails/EmployeeDetails';
-import addProps from 'App/components/global/Modal/templates/addProps';
-import editProps from 'App/components/global/Modal/templates/editProps';
-import deleteProps from 'App/components/global/Modal/templates/deleteProps';
-import deleteText from 'App/components/global/Modal/templates/deleteText';
-import { StaffEmployee } from 'App/components/pages/Staff/StaffEmployees/staffEmployeesTypes';
+import addProps from 'App/components/global/Modal/Dialog/AddModal/addProps';
+import editProps from 'App/components/global/Modal/Dialog/EditModal/editProps';
+import deleteProps from 'App/components/global/Modal/Alert/DeleteModal/deleteProps';
+import deleteText from 'App/components/global/Modal/Alert/DeleteModal/deleteText';
+import InfoModal from 'App/components/global/Modal/Alert/InfoModal/InfoModal';
+import WarningModal from 'App/components/global/Modal/Alert/WarningModal/WarningModal';
+import ErrorModal from 'App/components/global/Modal/Alert/ErrorModal/ErrorModal';
 import {
     requestEmployees,
     getStaffEmployees,
-    staffEmployeesToggleSidebar
+    staffEmployeesToggleSidebar,
+    staffEmployeesToggleToggleBar,
+    staffEmployeesToggleQuickFilter
 } from 'redux/Staff/StaffEmployees/staffEmployeesAction';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { Popover } from 'App/components/global/Popover/Popover';
+import { TabBar } from 'App/components/global/TabBar/TabBar';
+import { Tab } from 'App/components/global/TabBar/Tab/Tab';
 import { SideFilter } from '../../../global/SideFilter/SideFilter';
 import { Sidebar } from '../../../global/Sidebar/Sidebar';
 import { StaffEmployeeFilter } from './StaffEmployeeFilter/StaffEmployeeFilter';
-import { Tabs } from '../../../global/Tabs/Tabs';
-import { Tab } from '../../../global/Tabs/Tab/Tab';
 import { EmployeeIdentifiers } from './EmployeeIdentefiers/EmployeeIdentifiers';
 import { EmployeeTimetable } from './EmployeeTimetable/EmployeeTimetable';
 import { EmployeeEdit } from './EmployeeEdit/EmployeeEdit';
 import { EmployeeSchedule } from './EmployeeSchedule/EmployeeSchedule';
+import { useTable } from '../../../../../hooks/useTable/useTable';
 import './StaffEmployees.scss';
 
 const StaffEmployees = () => {
-    const dispatch = useDispatch();
     const tableState = useSelector((state: State) => state.staff.staffEmployees.employeesTable, shallowEqual);
     const sideabrOpened = useSelector((state: State) => state.staff.staffEmployees.sidebarOpened, shallowEqual);
-    const history = useHistory();
-    const [selectedRow, setSelectedRow] = useState<StaffEmployee | null>(null);
+    const { windowSize } = useSelector((state: State) => state.app, shallowEqual);
+    const filterState = useSelector((state: State) => state.staff.staffEmployees.quickFilter, shallowEqual);
     const tableElement = useRef<HTMLDivElement>(null);
-    const pageWrapper = useRef<HTMLDivElement>(null);
-    const rowElement = useRef(0);
-    const first = useRef(true);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [
+        selectionChangeHandler,
+        onKeyDown,
+        rowNumberHandler,
+        goToRowElement,
+        tableScrolleHeight,
+        selectedRow,
+        rowNumber
+    ] = useTable(tableState);
+
+    //  SideFilter logic
+    const [sideFilter, setSideFilter] = useState(false);
+
+    /* Calculate and rerender Table height */
+    const toggleSideFilter = () => {
+        setSideFilter(!sideFilter);
+    };
 
     useEffect(() => {
         dispatch(requestEmployees());
     }, [dispatch]);
 
-    const selectionChangeHandler = (e: any) => {
-        first.current = false;
-        rowElement.current = tableState.indexOf(e.value);
-        setSelectedRow(e.value);
-    };
-
-    //  SideFilter logic
-    const [sideFilter, setSideFilter] = useState(false);
-
-    const toggleSideFilter = () => {
-        setSideFilter(!sideFilter);
-    };
-
-    // Table navigation with keyboard
-    const onKeyDown = useCallback(
-        (ev: any) => {
-            /* Delete */
-            if (ev.code === 'Delete') {
-                console.log('delete');
-                console.log(selectedRow);
-                if (selectedRow) {
-                    history.push(`${window.location.pathname}/delete`);
-                }
-            }
-
-            // Table navigation with keyboard
-            const trackedKeys = ['ArrowUp', 'ArrowDown', 'Enter'];
-            const evWithKey = trackedKeys.includes(ev.key);
-
-            if (evWithKey) {
-                if (first.current === false && ev.key === 'ArrowUp' && rowElement.current === 0) {
-                    rowElement.current = 1;
-                    setSelectedRow(tableState[rowElement.current]);
-                }
-                if (rowElement.current < 0) {
-                    rowElement.current = 0;
-                    first.current = true;
-                }
-                if (rowElement.current >= tableState.length - 2 && ev.key === 'ArrowDown') {
-                    rowElement.current = tableState.length - 2;
-                    setSelectedRow(tableState[rowElement.current - 2]);
-                    first.current = false;
-                }
-                if (first.current === false && ev.key === 'ArrowDown') {
-                    rowElement.current++;
-                    setSelectedRow(tableState[rowElement.current]);
-                }
-                if (first.current === false && ev.key === 'ArrowUp') {
-                    rowElement.current--;
-                    setSelectedRow(tableState[rowElement.current]);
-                }
-                if (ev.key === 'Enter') {
-                    history.push(`${window.location.pathname}/edit`);
-                }
-                if (first.current === true && ev.key === 'ArrowDown') {
-                    first.current = false;
-                    setSelectedRow(tableState[0]);
-                }
-            }
-        },
-        [history, selectedRow, tableState]
-    );
-
-    const rowNumber = (e: React.FormEvent<HTMLInputElement>) => {
-        first.current = false;
-        const { value } = e.currentTarget;
-        rowElement.current = +value - 1;
-        setSelectedRow(tableState[rowElement.current]);
-        console.log(rowElement.current);
-    };
-
-    const goToRowElement = () => {
-        const table = document.querySelectorAll('.p-datatable-row');
-        if (rowElement.current >= 0 && rowElement.current < table.length) {
-            table[rowElement.current].scrollIntoView();
-            setSelectedRow(tableState[rowElement.current]);
-        }
-        if (rowElement.current < 0) {
-            rowElement.current = 0;
-            table[rowElement.current].scrollIntoView();
-            setSelectedRow(tableState[rowElement.current]);
-        }
-        if (rowElement.current >= table.length) {
-            rowElement.current = table.length - 1;
-            setSelectedRow(tableState[rowElement.current]);
-            table[rowElement.current].scrollIntoView();
-        }
-    };
-
     useEffect(() => {
-        document.addEventListener('keydown', onKeyDown, false);
+        document.addEventListener('keydown', onKeyDown as EventListener, false);
         return () => {
-            document.removeEventListener('keydown', onKeyDown, false);
+            document.removeEventListener('keydown', onKeyDown as EventListener, false);
         };
-    }, [history, tableState, onKeyDown]);
-
-    /* Quick filter - show, hide area with quick filter */
-    const [filterState, setFilterState] = useState(false);
-
-    /* Calculate and rerender Table height */
-    const [size, setSize] = useState([0, 0]);
-
-    const tableScrolleHeight = () => {
-        const tableHeader = tableElement.current?.querySelector('.p-datatable-header')?.clientHeight;
-        const tableScrollableHeader = tableElement.current?.querySelector('.p-datatable-scrollable-header')
-            ?.clientHeight;
-        const tablePaginator =
-            typeof tableElement.current?.querySelector('.p-paginator')?.clientHeight !== 'undefined'
-                ? tableElement.current?.querySelector('.p-paginator')?.clientHeight
-                : 0;
-        const scrollHeight =
-            tableElement.current?.clientHeight! - (tableHeader! + tableScrollableHeader! + tablePaginator!);
-
-        tableElement.current
-            ?.querySelector('.p-datatable-scrollable-body')
-            ?.setAttribute('style', `max-height:${scrollHeight}px;`);
-    };
+    }, [tableState, onKeyDown]);
 
     useLayoutEffect(() => {
-        tableScrolleHeight();
-    }, [size, filterState]);
-
-    useLayoutEffect(() => {
-        function updateSize() {
-            setSize([window.innerWidth, window.innerHeight]);
-        }
-        window.addEventListener('resize', updateSize);
-        updateSize();
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
+        tableScrolleHeight(tableElement);
+    }, [windowSize, filterState, tableScrolleHeight]);
 
     const tableProps = {
         value: tableState,
@@ -187,53 +87,46 @@ const StaffEmployees = () => {
         header: 'Сотрудники',
         className: 'p-datatable-sm',
         resizableColumns: true,
-        style: { height: '100%' },
         scrollable: true,
         scrollHeight: '100%',
         selectionMode: 'single',
         selection: selectedRow,
         onSelectionChange: selectionChangeHandler,
         onRowDoubleClick: () => dispatch(appToggleSidebar()),
-        onValueChange: (sortedData: any) => dispatch(getStaffEmployees(sortedData)),
-        paginator: true,
-        paginatorTemplate:
-            'CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown',
-        currentPageReportTemplate: `С {first} по {last} из ${tableState.length}`,
-        rows: tableState.length,
-        rowsPerPageOptions: [10, 20, 50],
-        paginatorLeft: (
-            <TableBottomCounter
-                rowNumber={rowNumber}
-                goToRowElement={goToRowElement}
-                rowElement={rowElement.current + 1}
-                tableRowCount={tableState.length}
-            />
-        )
+        onValueChange: (sortedData: any) => dispatch(getStaffEmployees(sortedData))
     };
     return (
         <>
-            <div ref={pageWrapper} className="page staff-employees" aria-label="page content">
+            <div className="page staff-employees" aria-label="page content">
                 {/* Toolbar */}
                 <Toolbar>
                     <section className="toolbar__section">
-                        <Buttons name="Settings" size="m" onPress={toggleSideFilter} />
-                        <Buttons name="Add" size="m" onPress={() => openModal('add', history)} />
+                        <Buttons name="Filter" size="m" typical onPress={toggleSideFilter} />
+                        <Buttons name="Add" size="m" typical onPress={() => openModal('add', history)} />
                         <Buttons
                             name="Edit"
                             size="m"
+                            typical={!!selectedRow}
                             disable={!selectedRow}
                             onPress={selectedRow ? () => openModal('edit', history) : undefined}
                         />
                         <Buttons
                             name="Delete"
                             size="m"
+                            typical={!!selectedRow}
                             disable={!selectedRow}
                             onPress={selectedRow ? () => openModal('delete', history) : undefined}
                         />
-                        <Buttons name="QuickFilter" size="m" onPress={() => setFilterState(!filterState)} />
                         <Buttons
-                            name="Preview"
+                            name="QuickFilter"
                             size="m"
+                            typical
+                            onPress={() => dispatch(staffEmployeesToggleQuickFilter())}
+                        />
+                        <Buttons
+                            name="Show"
+                            size="m"
+                            typical={!!selectedRow}
                             disable={!selectedRow}
                             onPress={selectedRow ? () => openModal('timetable', history) : undefined}
                         />
@@ -246,24 +139,35 @@ const StaffEmployees = () => {
                     onSuccessClick={() => console.log('Сотрудник добавлен')}
                     modalHeader="Добавить сотрудника"
                     modalName="add"
-                    modalIcon="Info"
-                >
+                    modalIcon="Info">
                     <div>
                         <span>Add</span>
                     </div>
                 </Modal>
 
-                {/* <ErrorModal modalName="delete">Не удалось получить данные о персонале!</ErrorModal>
-                 */}
+                <ErrorModal>Не удалось получить данные о персонале!</ErrorModal>
+
+                <WarningModal>Внимание, что-то пошло не так! Сделайте что-нибудь!</WarningModal>
+
+                <InfoModal>В системе что-то там произошло. Вам следует знать об этом!</InfoModal>
 
                 <Modal
                     {...editProps}
                     onSuccessClick={() => console.log('123')}
-                    modalHeader="Редактирование должности"
+                    modalHeader="Редактирование сотрудника"
                     modalName="edit"
-                    modalIcon="Edit"
-                >
-                    <EmployeeEdit />
+                    modalIcon="Edit">
+                    <TabBar>
+                        <Tab header="Общие" index={0}>
+                            <EmployeeEdit />
+                        </Tab>
+                        <Tab header="График работы" index={1}>
+                            <div style={{ width: '630px', height: '278px' }}>Здесь будет график работы</div>
+                        </Tab>
+                        <Tab header="Идентификаторы" index={2}>
+                            <div style={{ width: '630px', height: '278px' }}>Здесь будут идентификаторы</div>
+                        </Tab>
+                    </TabBar>
                 </Modal>
 
                 <Modal
@@ -271,8 +175,7 @@ const StaffEmployees = () => {
                     onSuccessClick={() => console.log('Сотрудник Удален')}
                     modalHeader="Удаление сотрудника"
                     modalName="delete"
-                    modalIcon="Warning"
-                >
+                    modalIcon="Warning">
                     {selectedRow ? (
                         <span>{deleteText(`сотрудника: ${selectedRow.name}`)}</span>
                     ) : (
@@ -285,8 +188,7 @@ const StaffEmployees = () => {
                     onSuccessClick={() => console.log('123')}
                     modalHeader="Подробный график"
                     modalName="timetable"
-                    modalIcon="Info"
-                >
+                    modalIcon="Info">
                     <TimetableParameters selectedUser={selectedRow} />
                 </Modal>
 
@@ -302,7 +204,7 @@ const StaffEmployees = () => {
                                             filterMatchMode="contains"
                                             filterPlaceholder="Поиск"
                                             field="uuid"
-                                            header="Табельный номер"
+                                            header="Табельный №"
                                             sortable
                                         />
                                         <Column
@@ -334,7 +236,7 @@ const StaffEmployees = () => {
                                             filterMatchMode="contains"
                                             filterPlaceholder="Поиск"
                                             field="created"
-                                            header="Создан"
+                                            header="Принят"
                                             sortable
                                         />
                                         <Column field="created" header="Уволен" sortable />
@@ -342,17 +244,25 @@ const StaffEmployees = () => {
                                     </DataTable>
                                 ) : (
                                     <DataTable {...tableProps}>
-                                        <Column field="uuid" header="Табельный номер" sortable />
+                                        <Column field="uuid" header="Табельный №" sortable />
                                         <Column field="name" header="Фамилия Имя Отчество" sortable />
                                         <Column field="subdivision" header="Подразделение" sortable />
                                         <Column field="occupation" header="Должность" sortable />
-                                        <Column field="created" header="Создан" sortable />
+                                        <Column field="created" header="Принят" sortable />
                                         <Column field="created" header="Уволен" sortable />
                                         <Column field="created" header="Удален" sortable />
                                     </DataTable>
                                 )}
                             </div>
                         </Popover>
+
+                        <TableBottomCounter
+                            rowNumber={rowNumberHandler}
+                            goToRowElement={goToRowElement}
+                            rowElement={rowNumber.current + 1}
+                            tableRowCount={tableState.length}
+                        />
+
                         <SideFilter onClose={toggleSideFilter} isOpen={sideFilter} iconName="Настройки">
                             <StaffEmployeeFilter />
                         </SideFilter>
@@ -363,21 +273,21 @@ const StaffEmployees = () => {
                         icon="SearchUser"
                         isOpen={sideabrOpened}
                         sidebarToggler={() => dispatch(staffEmployeesToggleSidebar())}
-                    >
-                        <Tabs>
-                            <Tab header="Общее">
+                        sidebarTrigger={() => dispatch(staffEmployeesToggleToggleBar())}>
+                        <TabBar>
+                            <Tab header="Общее" index={0}>
                                 <EmployeeDetails selectedUser={selectedRow} />
                             </Tab>
-                            <Tab header="Календарь">
+                            <Tab header="Календарь" index={1}>
                                 <EmployeeTimetable selectedUser={selectedRow} />
                             </Tab>
-                            <Tab header="Идентификаторы">
+                            <Tab header="Идентификаторы" index={2}>
                                 <EmployeeIdentifiers />
                             </Tab>
-                            <Tab header="График">
+                            <Tab header="График" index={3}>
                                 <EmployeeSchedule selectedUser={selectedRow} />
                             </Tab>
-                        </Tabs>
+                        </TabBar>
                     </Sidebar>
                 </section>
             </div>

@@ -11,7 +11,9 @@ import {
 } from './securityPostMonitoringTypes';
 import config from '../../../config/config.json';
 
-const getSecurityPostMonitoringEvents = (eventsList: SecurityPostMonitoringEvents): SecurityPostMonitoringActions => {
+export const getSecurityPostMonitoringEvents = (
+    eventsList: SecurityPostMonitoringEvents
+): SecurityPostMonitoringActions => {
     return {
         type: GET_SECURITY_POST_MONITORING_EVENTS,
         payload: eventsList

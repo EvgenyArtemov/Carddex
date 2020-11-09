@@ -12,33 +12,13 @@
         }
 
         &.shown {
-            animation: securityPostAnim4 0.25s forwards;
+            min-width: 320px;
+            max-width: 320px;
         }
 
         &.hidden {
-            animation: securityPostAnim3 0.25s forwards;
+            min-width: 50px;
+            max-width: 50px;
         }
-    }
-}
-
-@keyframes securityPostAnim4 {
-    0% {
-        min-width: 50px;
-        max-width: 50px;
-    }
-    100% {
-        min-width: 320px;
-        max-width: 320px;
-    }
-}
-
-@keyframes securityPostAnim3 {
-    0% {
-        min-width: 320px;
-        max-width: 320px;
-    }
-    100% {
-        min-width: 50px;
-        max-width: 50px;
     }
 }

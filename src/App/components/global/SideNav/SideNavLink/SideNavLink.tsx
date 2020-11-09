@@ -1,15 +1,17 @@
 import React, { useEffect, SyntheticEvent, memo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { State } from 'App/../redux/store';
 import { ArrowDrop } from 'App/../assets/images/arrowDrop';
+import { requestSideNavMenu } from 'redux/App/appActions';
 import { SideNavIcon } from '../SideNavIcon';
 import SubLink from './SubLink/Sublink';
 
 const SideNavLinkInner = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const currentRoute = history.location;
-    const sideNavState = useSelector((state: State) => state.sideNav, shallowEqual);
+    const sideNavState = useSelector((state: State) => state.app.sideNavMenu, shallowEqual);
 
     const addShadowToActiveSubMenu = () => {
         const activePage = document.querySelector('.active-page');
@@ -52,6 +54,10 @@ const SideNavLinkInner = () => {
             addShadowToActiveSubMenu();
         };
     });
+
+    useEffect(() => {
+        dispatch(requestSideNavMenu());
+    }, [dispatch]);
 
     return (
         <ul className="side__top">

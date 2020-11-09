@@ -330,8 +330,8 @@ $sliderCircleSize: $indent-lg;
                     margin-right: 0;
                 }
 
-                .custome-button {
-                    &:not(.custome-button--active) {
+                .custom-button {
+                    &--typical:not(.custom-button--danger):not(.custom-button--active) {
                         svg {
                             @each $theme, $map in $themes {
                                 .#{$theme} & {
@@ -340,16 +340,12 @@ $sliderCircleSize: $indent-lg;
                             }
                         }
                     }
-                
-                    &:hover {
-                        transform:scale(1.5);
-                    }
 
-                    &--disable {
+                    &--danger:not(.custom-button--active) {
                         svg {
                             @each $theme, $map in $themes {
                                 .#{$theme} & {
-                                    fill: map-get($map, brandPantonRed);
+                                    background: map-get($map, borderColor);
                                 }
                             }
                         }

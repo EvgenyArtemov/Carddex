@@ -1,18 +1,29 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { CustomScrollbar } from 'App/components/global/CustomScrollbar/CustomScrollbar';
 import { productionCalendarToggleSidebar } from '../../../../../redux/Settings/SettingsProductionCalendar/settingsProductionCalendarActions';
 import { Toolbar } from '../../../global/Toolbar/Toolbar';
 import { Buttons } from '../../../global/Buttons/Buttons';
 import { Sidebar } from '../../../global/Sidebar/Sidebar';
 import { Tabs } from '../../../global/Tabs/Tabs';
 import { Tab } from '../../../global/Tabs/Tab/Tab';
+import { State } from '../../../../../redux/store';
 import './SettingsProductionCalendar.scss';
 import { MonthCalendar } from './MonthCalendar/MonthCalendar';
 
+type selectedMonth = null | number;
+
 const SettingsProductionCalendar = () => {
-    const sidebarOpened = useSelector((state: State) => state.settings.productionCalendar.sidebarOpened, shallowEqual);
-    const [selectedMonth, setSelectedMonth] = useState(null);
+    const sidebarOpened = useSelector(
+        (state: State) => state.settings.productionCalendar.sidebarOpened,
+        shallowEqual
+    );
+    const { toggleBar } = useSelector(
+        (state: State) => state.app,
+        shallowEqual
+    );
+    const [selectedMonth, setSelectedMonth] = useState<selectedMonth>(null);
     const dispatch = useDispatch();
     const monthsList = [
         'Январь',
@@ -53,83 +64,126 @@ const SettingsProductionCalendar = () => {
     };
 
     return (
-        <section className="settings__production__calendar">
+        <section className="page settings__production__calendar">
             <Toolbar>
                 <section className="toolbar__section">
-                    <Buttons name="Settings" size="m" />
+                    <Buttons name="Filter" typical size="m" />
                 </section>
             </Toolbar>
-            <div className="settingsWrapper">
-                <div className="production__calendar__wrapper">
-                    <aside className="timeline">
-                        <div className="timeline__body" onClick={yearPicker}>
-                            <button className="year p--md--bold current__year" type="button">
-                                2020
-                            </button>
-                            <span className="timeline__line" />
-                            <button className="year p--md--bold" type="button">
-                                2019
-                            </button>
-                            <span className="timeline__line" />
-                            <button className="year p--md--bold" type="button">
-                                2018
-                            </button>
-                            <span className="timeline__line" />
-                            <button className="year p--md--bold" type="button">
-                                2017
-                            </button>
-                        </div>
-                    </aside>
-                    <div className="production__calendar__body" onClick={monthHandler}>
-                        {monthsList.map((el, i) => {
-                            return (
-                                <div className={`month ${i === 10 ? 'selected' : ''}`} key={el}>
-                                    <h3 className="month__header p--lg--bold">{el}</h3>
-                                    <div className="month__weekdays">
-                                        <span className="weekday p--sm--thin">Пн</span>
-                                        <span className="weekday p--sm--thin">Вт</span>
-                                        <span className="weekday p--sm--thin">Ср</span>
-                                        <span className="weekday p--sm--thin">Чт</span>
-                                        <span className="weekday p--sm--thin">Пт</span>
-                                        <span className="weekday p--sm--thin">Сб</span>
-                                        <span className="weekday p--sm--thin">Вс</span>
-                                    </div>
-                                    <div className="month__days">
-                                        {new Array(30).fill(_).map((elem, i) => {
-                                            if (
-                                                i === 5 ||
-                                                i === 6 ||
-                                                i === 12 ||
-                                                i === 13 ||
-                                                i === 19 ||
-                                                i === 20 ||
-                                                i === 26 ||
-                                                i === 27
-                                            ) {
-                                                return (
-                                                    <span className="month__day p--sm--bold weekend" key={i}>
-                                                        {i + 1}
-                                                    </span>
-                                                );
-                                            }
-                                            return (
-                                                <span className="month__day p--sm--bold" key={i}>
-                                                    {i + 1}
+            <div className="page__wrapper">
+                <div className="settingsWrapper">
+                    <div className="production__calendar__wrapper">
+                        <aside className="timeline">
+                            <div
+                                className="timeline__body"
+                                onClick={yearPicker}>
+                                <button
+                                    className="year p--md--bold current__year"
+                                    type="button">
+                                    2020
+                                </button>
+                                <span className="timeline__line" />
+                                <button
+                                    className="year p--md--bold"
+                                    type="button">
+                                    2019
+                                </button>
+                                <span className="timeline__line" />
+                                <button
+                                    className="year p--md--bold"
+                                    type="button">
+                                    2018
+                                </button>
+                                <span className="timeline__line" />
+                                <button
+                                    className="year p--md--bold"
+                                    type="button">
+                                    2017
+                                </button>
+                            </div>
+                        </aside>
+                        <CustomScrollbar trigger={toggleBar}>
+                            <div
+                                className="production__calendar__body"
+                                onClick={monthHandler}>
+                                {monthsList.map((el, i) => {
+                                    return (
+                                        <div
+                                            className={`month ${
+                                                i === 10 ? 'selected' : ''
+                                            }`}
+                                            key={el}>
+                                            <h3 className="month__header p--lg--bold">
+                                                {el}
+                                            </h3>
+                                            <div className="month__weekdays">
+                                                <span className="weekday p--sm--thin">
+                                                    Пн
                                                 </span>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                                <span className="weekday p--sm--thin">
+                                                    Вт
+                                                </span>
+                                                <span className="weekday p--sm--thin">
+                                                    Ср
+                                                </span>
+                                                <span className="weekday p--sm--thin">
+                                                    Чт
+                                                </span>
+                                                <span className="weekday p--sm--thin">
+                                                    Пт
+                                                </span>
+                                                <span className="weekday p--sm--thin">
+                                                    Сб
+                                                </span>
+                                                <span className="weekday p--sm--thin">
+                                                    Вс
+                                                </span>
+                                            </div>
+                                            <div className="month__days">
+                                                {new Array(30)
+                                                    .fill('_')
+                                                    .map((elem, i) => {
+                                                        if (
+                                                            i === 5 ||
+                                                            i === 6 ||
+                                                            i === 12 ||
+                                                            i === 13 ||
+                                                            i === 19 ||
+                                                            i === 20 ||
+                                                            i === 26 ||
+                                                            i === 27
+                                                        ) {
+                                                            return (
+                                                                <span
+                                                                    className="month__day p--sm--bold weekend"
+                                                                    key={i}>
+                                                                    {i + 1}
+                                                                </span>
+                                                            );
+                                                        }
+                                                        return (
+                                                            <span
+                                                                className="month__day p--sm--bold"
+                                                                key={i}>
+                                                                {i + 1}
+                                                            </span>
+                                                        );
+                                                    })}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </CustomScrollbar>
                     </div>
                 </div>
                 <Sidebar
                     sidebarName="Данные о месяце"
                     icon="SearchUser"
                     isOpen={sidebarOpened}
-                    sidebarToggler={() => dispatch(productionCalendarToggleSidebar())}
-                >
+                    sidebarToggler={() =>
+                        dispatch(productionCalendarToggleSidebar())
+                    }>
                     <Tabs>
                         <Tab header="Календарь">
                             <MonthCalendar />

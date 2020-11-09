@@ -1,0 +1,223 @@
+[
+    {
+        "sublinkName": "Организации",
+        "linkSubLink": [
+            {
+                "sublinkName": "ОГУ",
+                "linkSubLink": [
+                    {
+                        "sublinkName": "Институты и факультеты",
+                        "linkSubLink": [
+                            {
+                                "sublinkName": "Юридический институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Медицинский институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Художественно-графический факультет",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Мценский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Карачевский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sublinkName": "Студенты",
+                        "sublinkUrl": "/pupils-groups"
+                    }
+                ]
+            },
+            {
+                "sublinkName": "Орел ГАУ",
+                "linkSubLink": [
+                    {
+                        "sublinkName": "Институты и факультеты",
+                        "linkSubLink": [
+                            {
+                                "sublinkName": "Юридический институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Медицинский институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Художественно-графический факультет",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Мценский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Карачевский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sublinkName": "Студенты",
+                        "sublinkUrl": "/pupils-groups"
+                    }
+                ]
+            },
+            {
+                "sublinkName": "РАНХиГС",
+                "linkSubLink": [
+                    {
+                        "sublinkName": "Институты и факультеты",
+                        "linkSubLink": [
+                            {
+                                "sublinkName": "Юридический институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Медицинский институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Художественно-графический факультет",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Мценский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Карачевский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sublinkName": "Студенты",
+                        "sublinkUrl": "/pupils-groups"
+                    }
+                ]
+            },
+            {
+                "sublinkName": "ОГУЭТ",
+                "linkSubLink": [
+                    {
+                        "sublinkName": "Институты и факультеты",
+                        "linkSubLink": [
+                            {
+                                "sublinkName": "Юридический институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Медицинский институт",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Художественно-графический факультет",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Мценский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            },
+                            {
+                                "sublinkName": "Карачевский филиал",
+                                "linkSubLink": [
+                                    { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+                                    { "sublinkName": "Кафедры", "sublinkUrl": "/pupils-groups" },
+                                    { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sublinkName": "Студенты",
+                        "sublinkUrl": "/pupils-groups"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -16,7 +16,9 @@
     }
 
     &__content {
+        flex: 1 100%;
         padding-top: $indent-md;
+        overflow: hidden;
     }
 
     &.active {

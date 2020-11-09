@@ -6,7 +6,7 @@ import App from './App/App';
 import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import 'focus-visible/dist/focus-visible.js';
+import 'focus-visible/dist/focus-visible';
 import './index.scss';
 
 const root = document.getElementById('root');

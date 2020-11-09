@@ -1,7 +1,8 @@
 export interface BottombarState {
     isOpen: boolean;
     icon: string;
-    sidebarToggler: () => void;
+    bottombarToggler: () => void;
+    bottomTrigger?: () => void;
     bottombarName?: string;
     selectedEntry?: any;
     children?: JSX.Element;

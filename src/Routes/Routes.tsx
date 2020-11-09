@@ -40,6 +40,7 @@ import SettingsUsersAndRoles from '../App/components/pages/Settings/SettingsUser
 import SettingParameters from '../App/components/pages/Settings/SettingParameters/SettingParameters';
 import SettingsTerritoryZoning from '../App/components/pages/Settings/SettingsTerritoryZoning/SettingsTerritoryZoning';
 import SettingsEquipment from '../App/components/pages/Settings/SettingsEquipment/SettingsEquipment';
+import SettingsAccessPatterns from '../App/components/pages/Settings/SettingsAccessPatterns/SettingsAccessPatterns';
 import SettingsProductionCalendar from '../App/components/pages/Settings/SettingsProductionCalendar/SettingsProductionCalendar';
 import ImportExport from '../App/components/pages/Settings/ImportExport/ImportExport';
 import SettingsDatabase from '../App/components/pages/Settings/SettingsDatabase/SettingsDatabase';
@@ -52,6 +53,11 @@ const Routes = () => {
                 {/* Login */}
                 <Route exact path="/login">
                     <Login />
+                </Route>
+
+                {/* Redirect */}
+                <Route exact path="/">
+                    <Redirect to="/login" />
                 </Route>
 
                 <Content>
@@ -186,6 +192,9 @@ const Routes = () => {
                     <Route path="/settings-equipment">
                         <SettingsEquipment />
                     </Route>
+                    <Route path="/settings-access-patterns">
+                        <SettingsAccessPatterns />
+                    </Route>
                     <Route path="/import-export">
                         <ImportExport />
                     </Route>
@@ -210,10 +219,6 @@ const Routes = () => {
                     <Route path="/product-card">{/* <ProductCard /> */}</Route>
                     <Route path="/service">{/* <Service /> */}</Route>
                     <Route path="/reports">{/* <Reports /> */}</Route>
-
-                    <Route exact path="/">
-                        <Redirect to="/login" />
-                    </Route>
                 </Content>
             </Switch>
         </Router>

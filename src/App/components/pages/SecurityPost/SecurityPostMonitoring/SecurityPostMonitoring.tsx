@@ -1,10 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { State } from 'App/../redux/store';
 import { TabBar } from 'App/components/global/TabBar/TabBar';
+import { Tab } from 'App/components/global/TabBar/Tab/Tab';
 import { Toolbar } from 'App/components/global/Toolbar/Toolbar';
 import { Buttons } from 'App/components/global/Buttons/Buttons';
 import { SideFilter } from 'App/components/global/SideFilter/SideFilter';
+import _ from 'lodash';
 import { AttendingMonitoring } from './AttendingMonitoring/AttendingMonitoring';
 import { MonitoringMonitoring } from './MonitoringMonitoring/MonitoringMonitoring';
 import { StatisticsMonitoring } from './StatisticsMonitoring/StatisticsMonitoring';
@@ -18,53 +20,55 @@ import './SecurityPostMonitoring.scss';
 
 const SecurityPostMonitoring = () => {
     const dispatch = useDispatch();
-    const pageWrapper = useRef<HTMLDivElement>(null);
     const toggleBar = useSelector((state: State) => state.app.toggleBar, shallowEqual);
     const sideFilterIsOpen = useSelector((state: State) => state.securityPost.postMonitoring.sideFilter, shallowEqual);
-    const [tab, setTab] = useState(1);
-    const [tabs] = useState([
-        { index: 1, name: 'Мониторинг' },
-        { index: 2, name: 'Присутствующие' },
-        { index: 3, name: 'Статистика' }
-    ]);
 
     useEffect(() => {
         dispatch(requestSecurityPostMonitoringEvents());
     }, [dispatch]);
 
+    const triggerFilter = () => {
+        dispatch(toggleSecurityPostMonitoringSideFilter());
+    };
+
+    const triggerFilterDebounce = _.debounce(triggerFilter, 250);
+
     return (
-        <div ref={pageWrapper} className="page security-post-monitoring">
+        <div className="page security-post-monitoring" aria-label="page content">
             <Toolbar>
                 <section className="toolbar__section">
-                    <Buttons
-                        name="Settings"
-                        active={sideFilterIsOpen}
-                        size="m"
-                        onPress={() => dispatch(toggleSecurityPostMonitoringSideFilter())}
-                    />
+                    <Buttons name="Filter" typical active={sideFilterIsOpen} size="m" onPress={triggerFilterDebounce} />
+
                     <Buttons
                         name="QuickFilter"
                         size="m"
+                        typical
                         onPress={() => dispatch(toggleSecurityPostMonitoringQuickFilter())}
                     />
                 </section>
             </Toolbar>
 
-            <TabBar tabPosition={tab} setTab={setTab} tabs={tabs} trigger={toggleBar} />
+            <section className="page__wrapper">
+                <div className="tabs-spliter">
+                    <TabBar trigger={toggleBar}>
+                        <Tab header="События" index={0}>
+                            <MonitoringMonitoring />
+                        </Tab>
 
-            <div className="tabbar-tabs">
-                {tab === 1 && <MonitoringMonitoring />}
-                {tab === 2 && <AttendingMonitoring />}
-                {tab === 3 && <StatisticsMonitoring />}
+                        <Tab header="Присутствующие" index={1}>
+                            <AttendingMonitoring />
+                        </Tab>
 
-                <SideFilter
-                    onClose={() => dispatch(toggleSecurityPostMonitoringSideFilter())}
-                    isOpen={sideFilterIsOpen}
-                    iconName="Настройки"
-                >
-                    <SecurityPostMonitoringFilter />
-                </SideFilter>
-            </div>
+                        <Tab header="Статистика" index={2}>
+                            <StatisticsMonitoring />
+                        </Tab>
+                    </TabBar>
+
+                    <SideFilter onClose={triggerFilterDebounce} isOpen={sideFilterIsOpen} iconName="Настройки">
+                        <SecurityPostMonitoringFilter />
+                    </SideFilter>
+                </div>
+            </section>
         </div>
     );
 };

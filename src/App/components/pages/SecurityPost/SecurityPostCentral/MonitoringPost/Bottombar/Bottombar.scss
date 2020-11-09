@@ -2,29 +2,29 @@
 
 .bottombar {
     width: 100%;
-    min-height: 50px;
-    max-height: 50px;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid;
     transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
     z-index: 102;
     @each $theme, $map in $themes {
         .#{$theme} & {
-            border-color: map-get($map, borderColor);
             background: map-get($map, white);
         }
     }
 
     &__header {
         width: 100%;
+        min-height: 50px;
+        max-height: 50px;
         display: flex;
-        padding: $indent-sm $indent-md;
-        z-index: 103;
+        padding: $indent-sm;
+        border-top: 1px solid;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        z-index: 103;
         @each $theme, $map in $themes {
             .#{$theme} & {
                 background: map-get($map, white);
+                border-color: map-get($map, borderColor);
             }
         }
 
@@ -34,7 +34,7 @@
         }
     }
 
-    .custome-button--typical {
+    .custom-button--typical {
         svg {
             @each $theme, $map in $themes {
                 .#{$theme} & {
@@ -64,7 +64,8 @@
     }
 
     &.shown {
-        animation: bottombarAnim2 0.25s forwards;
+        min-height: 250px;
+        max-height: 250px;
 
         .bottombar__header {
             flex-direction: row;
@@ -79,7 +80,7 @@
             }
 
             &-close {
-                .custome-button--typical {
+                .custom-button--typical {
                     svg {
                         border: none;
                         @each $theme, $map in $themes {
@@ -99,27 +100,6 @@
     }
 
     &.hidden {
-        animation: bottombarAnim1 0.25s forwards;
-    }
-}
-
-@keyframes bottombarAnim2 {
-    0% {
-        min-height: 50px;
-        max-height: 50px;
-    }
-    100% {
-        min-height: 250px;
-        max-height: 250px;
-    }
-}
-
-@keyframes bottombarAnim1 {
-    0% {
-        min-height: 250px;
-        max-height: 250px;
-    }
-    100% {
         min-height: 50px;
         max-height: 50px;
     }

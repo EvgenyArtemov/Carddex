@@ -6,12 +6,4 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
-
-    .tabbar-tabs {
-        @each $theme, $map in $themes {
-            .#{$theme} & {
-                background: map-get($map, brandBackgroundCard); 
-            }
-        }
-    }
 }

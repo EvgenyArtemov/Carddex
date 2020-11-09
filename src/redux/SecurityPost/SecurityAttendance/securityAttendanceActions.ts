@@ -1,15 +1,20 @@
 import axios from 'axios';
 import { Dispatch } from 'react';
 import config from '../../../config/config.json';
-import { 
+import {
     SecurityAttendanceActions,
     SecurityAttendances,
     SECURITY_ATTENDANCE_TOGGLE_SIDEBAR,
-    GET_SECURITY_ATTENDANCE
+    GET_SECURITY_ATTENDANCE,
+    SECURITY_ATTENDANCE_QUICK_FILTER
 } from './securityAttendanceTypes';
 
 export const securityAttendanceToggleSidebar = (): SecurityAttendanceActions => ({
     type: SECURITY_ATTENDANCE_TOGGLE_SIDEBAR
+});
+
+export const securityAttendanceToggleQuickFilter = (): SecurityAttendanceActions => ({
+    type: SECURITY_ATTENDANCE_QUICK_FILTER
 });
 
 export const getSecurityAttendance = (attendanceTable: SecurityAttendances): SecurityAttendanceActions => ({

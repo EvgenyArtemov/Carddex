@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'react';
 import config from '../../../config/config.json';
-import {
-    StaffDepartmentsActions,
-    StaffDepartments,
-    GET_STAFF_DEPARTMENTS
-} from './staffDepartmentsTypes';
+import { StaffDepartmentsActions, StaffDepartments, GET_STAFF_DEPARTMENTS } from './staffDepartmentsTypes';
 
 export const getStaffDepartments = (list: StaffDepartments): StaffDepartmentsActions => ({
     type: GET_STAFF_DEPARTMENTS,

@@ -1,3 +1,30 @@
-.settings-about-program {
+@import '../../../../../assets/styles/utils/mixin';
+
+.settings__about__program {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+
+    .logo {
+        svg {
+            width: 400px;
+            height: 150px;
+            margin-top: 100px;
+
+            & > g > path:nth-child(1) {
+                fill: $brandPantonText;
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        fill: map-get($map, brandPantonText);
+                    }
+                }
+            }
+        }
+    }
+
+    span {
+        margin-bottom: 30px;
+    }
 }

@@ -16,7 +16,12 @@ export const EmployeeIdentifiers = () => {
             </div>
             <div className="block">
                 <div className="general">
-                    <Buttons name="Settings" size="m" onPress={() => setOpen(!open)} />
+                    <Buttons
+                        name="Filter"
+                        size="m"
+                        typical
+                        onPress={() => setOpen(!open)}
+                    />
                     <div className="identifier__number">9453214569874521</div>
                     <div className="identifier__status">Постоянный</div>
                 </div>
@@ -43,7 +48,12 @@ export const EmployeeIdentifiers = () => {
             </div>
             <div className="block">
                 <div className="general">
-                    <Buttons name="Settings" size="m" onPress={() => setOpen2(!open2)} />
+                    <Buttons
+                        name="Filter"
+                        size="m"
+                        typical
+                        onPress={() => setOpen2(!open2)}
+                    />
                     <div className="identifier__number">9453214569874521</div>
                     <div className="identifier__status">Постоянный</div>
                 </div>

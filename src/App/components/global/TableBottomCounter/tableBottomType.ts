@@ -1,5 +1,5 @@
 export interface TableBottomType {
-    rowNumber: (event: React.FormEvent<HTMLInputElement>) => void;
+    rowNumber: (property: number) => void;
     goToRowElement: () => void;
     rowElement: number;
     tableRowCount: number;

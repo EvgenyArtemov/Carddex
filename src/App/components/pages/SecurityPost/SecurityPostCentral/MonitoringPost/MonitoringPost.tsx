@@ -1,8 +1,12 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { State } from 'App/../redux/store';
 import { TabBar } from 'App/components/global/TabBar/TabBar';
-import { securityPostCentralToggleBottombar } from '../../../../../../redux/SecurityPost/SecurityPostCentral/securityPostCentralAction';
+import { Tab } from 'App/components/global/TabBar/Tab/Tab';
+import {
+    securityPostCentralToggleBottombar,
+    securityPostCentralToggleBar
+} from 'App/../redux/SecurityPost/SecurityPostCentral/securityPostCentralAction';
 import { Equipments } from './Equipments/Equipments';
 import { VideoMonitoring } from './VideoMonitoring/VideoMonitoring';
 import { GraphicPlan } from './GraphicPlan/GraphicPlan';
@@ -11,30 +15,28 @@ import './MonitoringPost.scss';
 
 const MonitoringPostInner = () => {
     const dispatch = useDispatch();
-    const { bottombarOpened } = useSelector((state: State) => state.securityPost.postCentral, shallowEqual);
-    const { toggleBar } = useSelector((state: State) => state.app, shallowEqual);
-    const [tab, setTab] = useState(1);
-    const [tabs] = useState([
-        { index: 1, name: 'Управление' },
-        { index: 2, name: 'Видеонаблюдение' },
-        { index: 3, name: 'Графический план' }
-    ]);
+    const { bottombarOpened, toggleBar } = useSelector((state: State) => state.securityPost.postCentral, shallowEqual);
 
     return (
         <div className="monitoring-post">
-            <TabBar tabPosition={tab} setTab={setTab} tabs={tabs} trigger={toggleBar} />
-
-            <div className="tabbar-tabs">
-                {tab === 1 && <Equipments />}
-                {tab === 2 && <VideoMonitoring />}
-                {tab === 3 && <GraphicPlan />}
-            </div>
+            <TabBar trigger={toggleBar}>
+                <Tab header="Управление" index={0}>
+                    <Equipments />
+                </Tab>
+                <Tab header="Видеонаблюдение" index={1}>
+                    <VideoMonitoring />
+                </Tab>
+                <Tab header="Графический план" index={2}>
+                    <GraphicPlan />
+                </Tab>
+            </TabBar>
 
             <Bottombar
-                icon="Pie"
+                icon={bottombarOpened ? 'ArrowDown' : 'ArrowUp'}
                 bottombarName="Зональность территории и статистика"
                 isOpen={bottombarOpened}
-                sidebarToggler={() => dispatch(securityPostCentralToggleBottombar())}
+                bottombarToggler={() => dispatch(securityPostCentralToggleBottombar())}
+                bottomTrigger={() => dispatch(securityPostCentralToggleBar())}
             />
         </div>
     );

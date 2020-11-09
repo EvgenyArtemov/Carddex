@@ -1,19 +1,18 @@
-import React, { useEffect, FC, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Route, useHistory, useLocation } from 'react-router-dom';
 import Draggable from 'react-draggable';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
+import { Close } from 'App/../assets/images/bx-x';
 import { Buttons } from 'App/components/global/Buttons/Buttons';
 import currentPath from 'utils/currentPath/currentPath';
 import { ModalProps } from 'App/components/global/Modal/modalTypes';
-import { ReactComponent as Attention } from '../../../../assets/images/bx-attention.svg';
-import { ReactComponent as Warning } from '../../../../assets/images/bx-warning.svg';
-import { ReactComponent as Danger } from '../../../../assets/images/bx-danger.svg';
-import { ReactComponent as Info } from '../../../../assets/images/bx-info.svg';
-import { ReactComponent as CheckMark } from '../../../../assets/images/bx-check.svg';
-import { ReactComponent as Edit } from '../../../../assets/images/edit_button.svg';
+import { ModalWarning } from 'App/../assets/images/modal-warning';
+import { ModalDelete } from 'App/../assets/images/modal-delete';
+import { ModalError } from 'App/../assets/images/modal-error';
+import { ModalInfo } from 'App/../assets/images/modal-info';
+import { Edit } from 'App/../assets/images/edit_button';
 import './Modal.scss';
 
-const Modal: FC<ModalProps> = (props) => {
+const Modal = (props: ModalProps) => {
     const location = useLocation();
     const history = useHistory();
     const defaultPath = location.pathname.replace(`/${props.modalName}`, '');
@@ -49,63 +48,71 @@ const Modal: FC<ModalProps> = (props) => {
         }
     });
 
-    // const modalClickOutside = (e: React.SyntheticEvent) => {
-    //     const checkingElement = Array.prototype.slice.call(modal.current?.querySelectorAll('*'));
-    //     if (!checkingElement.includes(e.target)) {
-    //         closeModal();
-    //     }
-    // };
-
-    /* MODAL ICON COLOR */
-    const attentionColor = {
-        fill: '#ffcc00'
-    };
-    const warningColor = {
-        fill: '#ff0000'
-    };
-    const okColor = {
-        fill: '#20CD32'
-    };
-    const regularColor = {
-        fill: '#1d68d9'
-    };
-
     return (
         <Route exact path={modalPath}>
-            <div ref={modal} /*onClick={modalClickOutside}*/ className={`modal-wrapper ${props.modalClassName}`}>
-                <Draggable bounds="parent">
-                    <div className="modal">
-                        <div className="modal__header modal-header">
+            <div ref={modal} className="modal-wrapper">
+                <Draggable bounds="parent" handle="strong">
+                    <div
+                        className={`modal${
+                            props.modalName === 'add' || props.modalName === 'edit' || props.modalName === 'timetable'
+                                ? ' dialog-modal'
+                                : ' alert-modal'
+                        }`}>
+                        <strong className="modal__header modal-header">
                             {props.modalIcon && (
-                                <div className="modal-header__icon">
-                                    {props.modalIcon === 'Attention' ? (
-                                        <Attention style={attentionColor} />
-                                    ) : props.modalIcon === 'Warning' ? (
-                                        <Warning style={warningColor} />
-                                    ) : props.modalIcon === 'Danger' ? (
-                                        <Danger style={warningColor} />
-                                    ) : props.modalIcon === 'Info' ? (
-                                        <Info style={regularColor} />
-                                    ) : props.modalIcon === 'CheckMark' ? (
-                                        <CheckMark style={okColor} />
-                                    ) : props.modalIcon === 'Edit' ? (
-                                        <Edit style={regularColor} />
-                                    ) : null}
+                                <div className={`modal-header__icon ${props.modalIcon}`}>
+                                    {props.modalName === 'add' && <ModalInfo />}
+                                    {props.modalName === 'edit' && <Edit />}
+                                    {props.modalName === 'timetable' && <Edit />}
                                 </div>
                             )}
-                            <span className="modal-header__label">{props.modalHeader}</span>
+                            <span className="modal-header__label p--md--bold">{props.modalHeader}</span>
                             <div className="modal-header__toggler" onClick={closeModal}>
-                                <CrossIcon label="Закрыть" />
+                                <Close />
                             </div>
+                        </strong>
+                        <div className="modal__body">
+                            {props.modalName === 'add' ||
+                            props.modalName === 'edit' ||
+                            props.modalName === 'timetable' ? (
+                                props.children
+                            ) : (
+                                <>
+                                    <div className={`modal__body-icon ${props.modalName}`}>
+                                        {props.modalName === 'error' && <ModalError />}
+                                        {props.modalName === 'warning' && <ModalWarning />}
+                                        {props.modalName === 'delete' && <ModalDelete />}
+                                        {props.modalName === 'info' && <ModalInfo />}
+                                    </div>
+                                    <div className="modal__body-info p--md--normal">{props.children}</div>
+                                </>
+                            )}
                         </div>
-                        <div className="modal__body">{props.children}</div>
                         <div className="modal__footer modal-footer">
                             <div className="modal-footer__content">
-                                {!props.successButtonHidden && (
-                                    <Buttons name="Save" label="Применить" active onPress={props.onSuccessClick} />
+                                {props.successButtonLabel && (
+                                    <Buttons
+                                        name="Success"
+                                        label={props.successButtonLabel}
+                                        typical
+                                        onPress={props.onSuccessClick}
+                                    />
                                 )}
-                                {!props.declineButtonHidden && (
-                                    <Buttons name="Cancel" label="Отмена" active onPress={closeModal} />
+                                {props.denyButtonLabel && (
+                                    <Buttons
+                                        name="Deny"
+                                        label={props.denyButtonLabel}
+                                        danger
+                                        onPress={props.onDenyClick}
+                                    />
+                                )}
+                                {props.cancelButtonLabel && (
+                                    <Buttons
+                                        name="Cancel"
+                                        label={props.cancelButtonLabel}
+                                        typical
+                                        onPress={props.onCancelClick}
+                                    />
                                 )}
                             </div>
                         </div>

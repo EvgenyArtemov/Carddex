@@ -7,7 +7,10 @@ import { Sidebar } from 'App/components/global/Sidebar/Sidebar';
 import { SideFilter } from 'App/components/global/SideFilter/SideFilter';
 import { Events } from './Events/Events';
 import { MonitoringPost } from './MonitoringPost/MonitoringPost';
-import { securityPostCentralToggleSidebar } from '../../../../../redux/SecurityPost/SecurityPostCentral/securityPostCentralAction';
+import {
+    securityPostCentralToggleSidebar,
+    securityPostCentralToggleBar
+} from '../../../../../redux/SecurityPost/SecurityPostCentral/securityPostCentralAction';
 import SecurityPostCentralFilter from './SecurityPostCentralFilter/SecurityPostCentralFilter';
 import './SecurityPostCentral.scss';
 
@@ -24,33 +27,33 @@ const SecurityPostCentral = () => {
         <div className="page security-post-central" aria-label="page content">
             <Toolbar>
                 <section className="toolbar__section">
-                    <Buttons name="Settings" size="m" onPress={toggleSideFilter} active={sideFilter} />
+                    <Buttons name="Filter" size="m" typical active={sideFilter} onPress={toggleSideFilter} />
                 </section>
                 <section className="toolbar__section">
-                    <Buttons name="LetIn" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="Stop" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="Control" size="m" onPress={() => console.log('Click!')} />
+                    <Buttons name="LetIn" size="m" typical onPress={() => console.log('Click!')} />
+                    <Buttons name="Stop" size="m" typical onPress={() => console.log('Click!')} />
+                    <Buttons name="Control" size="m" typical onPress={() => console.log('Click!')} />
                 </section>
                 <section className="toolbar__section">
-                    <Buttons name="LetInMany" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="LetInOne" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="LetOutOne" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="LetOutMany" size="m" onPress={() => console.log('Click!')} />
+                    <Buttons name="LetInMany" size="m" typical onPress={() => console.log('Click!')} />
+                    <Buttons name="LetInOne" size="m" typical onPress={() => console.log('Click!')} />
+                    <Buttons name="LetOutOne" size="m" typical onPress={() => console.log('Click!')} />
+                    <Buttons name="LetOutMany" size="m" typical onPress={() => console.log('Click!')} />
                 </section>
-                <section className="toolbar__section">
-                    <Buttons name="Warning" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="Bell" size="m" onPress={() => console.log('Click!')} />
-                    <Buttons name="Events" size="m" onPress={() => console.log('Click!')} />
+                <section className="toolbar__section toolbar__section--alarm">
+                    <Buttons name="Bell" size="m" danger onPress={() => console.log('Click!')} />
+                    <Buttons name="BlockUnLock" size="m" danger onPress={() => console.log('Click!')} />
+                    <Buttons name="SecurityCall" size="m" danger onPress={() => console.log('Click!')} />
                 </section>
             </Toolbar>
             <section className="page__wrapper">
                 <MonitoringPost />
                 <Sidebar
                     sidebarName="События"
-                    icon="Events"
+                    icon={sidebarOpened ? 'ArrowRight' : 'ArrowLeft'}
                     isOpen={sidebarOpened}
                     sidebarToggler={() => dispatch(securityPostCentralToggleSidebar())}
-                >
+                    sidebarTrigger={() => dispatch(securityPostCentralToggleBar())}>
                     <Events />
                 </Sidebar>
                 <SideFilter onClose={toggleSideFilter} isOpen={sideFilter} iconName="Настройки">

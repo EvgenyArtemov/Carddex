@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import { State } from '../../../../../../redux/store';
 import { NavLink } from 'react-router-dom';
+import { State } from '../../../../../../redux/store';
 import { SideNavIcon } from '../../SideNavIcon';
 
 interface SublinkState {
@@ -9,7 +9,7 @@ interface SublinkState {
 }
 
 const SubLink = (props: SublinkState) => {
-    const sideNavState = useSelector((state: State) => state.sideNav[props.id].linkSubLink, shallowEqual);
+    const sideNavState = useSelector((state: State) => state.app.sideNavMenu[props.id].linkSubLink, shallowEqual);
 
     return (
         <div className="submenu">
@@ -17,10 +17,9 @@ const SubLink = (props: SublinkState) => {
                 return (
                     <NavLink
                         activeClassName="active-page"
-                        to={index.sublinkUrl}
+                        to={index.sublinkUrl ? index.sublinkUrl : '/'}
                         className="sub-link"
-                        key={index.sublinkName}
-                    >
+                        key={index.sublinkName}>
                         <li className="subparagraph">
                             <SideNavIcon linkName={index.sublinkName} />
                             <div className="list-name">

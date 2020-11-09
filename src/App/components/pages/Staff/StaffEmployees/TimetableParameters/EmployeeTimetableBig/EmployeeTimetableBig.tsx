@@ -1,148 +1,224 @@
-import React from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { StaffEmployee } from 'App/../redux/Staff/StaffEmployees/staffEmployeesTypes';
+import { State } from 'App/../redux/store';
+import { PrevButton } from 'assets/images/prev__btn';
+import { NextButton } from 'assets/images/next__btn';
+import { requestTimetable } from 'App/../redux/Staff/StaffEmployees/EmployeeTimetable/employeeTimetableActions';
+import { useSelection } from '../../../../../../../hooks/useSelection/useSelection';
 import './EmployeeTimetableBig.scss';
 
 interface EmployeeTimetableProps {
     selectedUser: StaffEmployee;
 }
 
+type direction = 'forward' | 'backward';
+
 export const EmployeeTimetableBig: React.FC<EmployeeTimetableProps> = ({ selectedUser }) => {
+    const dispatch = useDispatch();
+    const memoDispatch = useCallback(dispatch, []);
+    const calendar = useRef(null);
+    const timetable = useSelector((state: State) => state.staff.staffEmployeeTimetable.timetable, shallowEqual);
+    const [selectionHandler, periodOn, periodOff] = useSelection(calendar);
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+    const [requestedMonth, setRequestedMonth] = useState(currentMonth);
+    const [requestedYear, setRequestedYear] = useState(currentYear);
+    let firstDayOfWeek: number | undefined;
+    let lastDayOfWeek: number | undefined;
+    let prevMonthIsFull;
+    let endDays;
+    let begDays: number[];
+
+    // It determines is prev month is full
+    const monthIsFull = (date: number) => {
+        // months that includes 31 days
+        return [1, 3, 5, 7, 8, 10, 12].includes(date);
+    };
+    // Days to add to the end/beggining of the month
+    endDays = prevMonthIsFull ? [26, 27, 28, 29, 30, 31] : [25, 26, 27, 28, 29, 30];
+    // February has less days
+    if (timetable && currentMonth === 3) {
+        endDays = [23, 24, 25, 26, 27, 28];
+    }
+    // eslint-disable-next-line prefer-const
+    begDays = [1, 2, 3, 4, 5, 6];
+
+    if (timetable) {
+        // getting number of the requested month
+        firstDayOfWeek = timetable?.timesperday[0]?.dayofweek || 1;
+        lastDayOfWeek = timetable?.timesperday[timetable?.timesperday.length - 1]?.dayofweek || 30;
+        prevMonthIsFull = monthIsFull(currentMonth - 1);
+    }
+
+    const monthHandler = (direction: direction) => {
+        if (direction === 'forward' && requestedMonth < currentMonth && requestedYear === currentYear) {
+            setRequestedMonth((prev) => prev + 1);
+        }
+        if (direction === 'forward' && requestedYear < currentYear) {
+            setRequestedMonth((prev) => prev + 1);
+        }
+        if (direction === 'backward') {
+            setRequestedMonth((prev) => prev - 1);
+        }
+        if (direction === 'forward' && requestedMonth === 12) {
+            setRequestedMonth(1);
+        }
+        if (direction === 'backward' && requestedMonth === 1) {
+            setRequestedMonth(12);
+        }
+    };
+
+    const yearHandler = (direction: direction) => {
+        if (direction === 'forward' && requestedYear < currentYear) {
+            setRequestedYear((prev) => prev + 1);
+        }
+        if (direction === 'backward') {
+            setRequestedYear((prev) => prev - 1);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedUser) {
+            memoDispatch(requestTimetable(selectedUser?.uuid, requestedMonth, requestedYear));
+        }
+    }, [memoDispatch, selectedUser, requestedMonth, requestedYear]);
     return (
-        <section className="big__timetable__wrapper">
-            {/* <div className="timetable__header">График работы 5/2</div> */}
-            <div className="big__timetable__calendar">
-                <div className="calendar__spacer" />
-                <div className="calendar__weekdays">
-                    <div className="calendar__weekdays__day">Пн</div>
-                    <div className="calendar__weekdays__day">Вт</div>
-                    <div className="calendar__weekdays__day">Ср</div>
-                    <div className="calendar__weekdays__day">Чт</div>
-                    <div className="calendar__weekdays__day">Пт</div>
-                    <div className="calendar__weekdays__day">Сб</div>
-                    <div className="calendar__weekdays__day">Вс</div>
+        <section className="timetable--big timetable__wrapper">
+            <div>
+                <div className="controls">
+                    <div className="controls__buttons">
+                        <button className="controls__button" type="button" onClick={() => monthHandler('backward')}>
+                            <PrevButton />
+                        </button>
+                    </div>
+                    <div className="controls__month">
+                        <span>
+                            {requestedMonth === 1
+                                ? 'Январь'
+                                : requestedMonth === 2
+                                ? 'Февраль'
+                                : requestedMonth === 3
+                                ? 'Март'
+                                : requestedMonth === 4
+                                ? 'Апрель'
+                                : requestedMonth === 5
+                                ? 'Май'
+                                : requestedMonth === 6
+                                ? 'Июнь'
+                                : requestedMonth === 7
+                                ? 'Июль'
+                                : requestedMonth === 8
+                                ? 'Август'
+                                : requestedMonth === 9
+                                ? 'Сентябрь'
+                                : requestedMonth === 10
+                                ? 'Октябрь'
+                                : requestedMonth === 11
+                                ? 'Ноябрь'
+                                : requestedMonth === 12
+                                ? 'Декабрь'
+                                : 'Месяц'}
+                        </span>
+                        <div className="controls__buttons">
+                            <button className="controls__button" type="button" onClick={() => monthHandler('forward')}>
+                                <NextButton />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="controls__year">
+                        <div className="controls__buttons">
+                            <button className="controls__button" type="button" onClick={() => yearHandler('backward')}>
+                                <PrevButton />
+                            </button>
+                        </div>
+                        <span>{requestedYear}</span>
+                        <div className="controls__buttons">
+                            <button className="controls__button" type="button" onClick={() => yearHandler('forward')}>
+                                <NextButton />
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="calendar__weeknumbers">
-                    <div className="calendar__weeknumbers__number">33</div>
-                    <div className="calendar__weeknumbers__number">34</div>
-                    <div className="calendar__weeknumbers__number">35</div>
-                    <div className="calendar__weeknumbers__number">36</div>
-                    <div className="calendar__weeknumbers__number">37</div>
+                <div
+                    className="timetable__calendar"
+                    tabIndex={0}
+                    onClick={selectionHandler}
+                    onKeyDown={periodOn}
+                    onKeyUp={periodOff}
+                >
+                    <div className="calendar__weekdays">
+                        <div className="calendar__weekdays__day">ПН</div>
+                        <div className="calendar__weekdays__day">ВТ</div>
+                        <div className="calendar__weekdays__day">СР</div>
+                        <div className="calendar__weekdays__day">ЧТ</div>
+                        <div className="calendar__weekdays__day">ПТ</div>
+                        <div className="calendar__weekdays__day weekend">СБ</div>
+                        <div className="calendar__weekdays__day weekend">ВС</div>
+                        <div className="weekdays__border" />
+                    </div>
+                    <div className="calendar__weeknumbers">
+                        <div className="calendar__weeknumbers__number">33</div>
+                        <div className="calendar__weeknumbers__number">34</div>
+                        <div className="calendar__weeknumbers__number">35</div>
+                        <div className="calendar__weeknumbers__number">36</div>
+                        <div className="calendar__weeknumbers__number">37</div>
+                    </div>
+                    <div className="calendar__body" ref={calendar}>
+                        {timetable &&
+                            firstDayOfWeek &&
+                            endDays.splice(endDays.length - (firstDayOfWeek - 1), firstDayOfWeek - 1).map((el) => {
+                                return (
+                                    <div className="day past" key={el}>
+                                        <span className="day__number">{el}</span>
+                                    </div>
+                                );
+                            })}
+                        {timetable &&
+                            timetable.timesperday.map((el: any, i: number) => {
+                                return (
+                                    <div
+                                        className={`day ${el.corrected ? 'correction--holiday' : ''}`}
+                                        data-cell={`${i + 1}`}
+                                        key={el.day}
+                                    >
+                                        <span
+                                            className={`day__number ${el.dayofweek === 6 ? 'weekend' : ''} ${
+                                                el.dayofweek === 7 ? 'weekend' : ''
+                                            }`}
+                                        >
+                                            {el.day.split('.')[0]}
+                                        </span>
+                                        <span className="day__hours">{el.times}</span>
+                                    </div>
+                                );
+                            })}
+                        {timetable &&
+                            lastDayOfWeek &&
+                            begDays.splice(0, 7 - lastDayOfWeek).map((el) => {
+                                return (
+                                    <div className="day past" key={el}>
+                                        <span className="day__number">{el}</span>
+                                    </div>
+                                );
+                            })}
+                    </div>
                 </div>
-                <div className="calendar__body">
-                    <div className="day mark--incorrect mark--holiday" data-cell="1">
-                        <span className="day__number">1</span>
-                        <span className="day__hours">12.28</span>
+                <div className="descriptions">
+                    <div className="descriptions__item">
+                        <span className="correction__sign--manual" />
+                        <span className="correction__meaning">Ручная корректировка</span>
                     </div>
-                    <div className="day" data-cell="2">
-                        <span className="day__number">2</span>
-                        <span className="day__hours bad">09.28</span>
-                    </div>
-                    <div className="day" data-cell="3">
-                        <span className="day__number">3</span>
-                        <span className="day__hours">10.18</span>
-                    </div>
-                    <div className="day" data-cell="4">
-                        <span className="day__number">4</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="5">
-                        <span className="day__number">5</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day weekend" data-cell="6">
-                        6
-                    </div>
-                    <div className="day weekend" data-cell="7">
-                        7
-                    </div>
-                    <div className="day" data-cell="8">
-                        <span className="day__number">8</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="9">
-                        <span className="day__number">9</span>
-                        <span className="day__hours">12.05</span>
-                    </div>
-                    <div className="day" data-cell="10">
-                        <span className="day__number">10</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="11">
-                        <span className="day__number">11</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="12">
-                        <span className="day__number">12</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day weekend" data-cell="13">
-                        13
-                    </div>
-                    <div className="day weekend" data-cell="14">
-                        14
-                    </div>
-                    <div className="day" data-cell="15">
-                        <span className="day__number">15</span>
-                    </div>
-                    <div className="day" data-cell="16">
-                        <span className="day__number">16</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="17">
-                        <span className="day__number">17</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day weekend" data-cell="18">
-                        <span className="day__number">18</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="19">
-                        <span className="day__number">19</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day weekend" data-cell="20">
-                        <span className="day__number">20</span>
-                    </div>
-                    <div className="day weekend" data-cell="21">
-                        <span className="day__number">21</span>
-                    </div>
-                    <div className="day" data-cell="22">
-                        <span className="day__number">22</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="23">
-                        <span className="day__number">23</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="24">
-                        <span className="day__number">24</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="25">
-                        <span className="day__number">25</span>
-                        <span className="day__hours">12.00</span>
-                    </div>
-                    <div className="day" data-cell="26">
-                        <span className="day__number current">22</span>
-                    </div>
-                    <div className="day weekend" data-cell="27">
-                        27
-                    </div>
-                    <div className="day weekend" data-cell="28">
-                        28
-                    </div>
-                    <div className="day" data-cell="29">
-                        29
-                    </div>
-                    <div className="day" data-cell="30">
-                        30
+                    <div className="descriptions__item">
+                        <span className="correction__sign--holidays" />
+                        <span className="correction__meaning">Отпуск/Больничный</span>
                     </div>
                 </div>
             </div>
-            <div className="ruler ruler--one" />
-            <div className="ruler ruler--two" />
-            <div className="ruler ruler--three" />
-            <div className="ruler ruler--four" />
+            <aside className="timetable__codes">
+                <h2 className="timetable__codes__dates">28 Октября 2020</h2>
+                <h2 className="timetable__codes__header p--lg--normal">{selectedUser.name}</h2>
+            </aside>
         </section>
     );
 };

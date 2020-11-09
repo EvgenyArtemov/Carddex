@@ -1,6 +1,9 @@
 @import '../../../../../../assets/styles/utils/mixin';
 
 .month__calendar__wrapper {
+    height: 100%;
+    overflow: hidden;
+
     .statistics {
         display: flex;
         flex-wrap: wrap;

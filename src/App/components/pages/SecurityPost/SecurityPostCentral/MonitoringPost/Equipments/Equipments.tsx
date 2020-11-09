@@ -6,7 +6,7 @@ import { Equipment } from './Equipment/Equipment';
 import './Equipments.scss';
 
 const EquipmentsInner = () => {
-    const { toggleBar } = useSelector((state: State) => state.app, shallowEqual);
+    const { toggleBar } = useSelector((state: State) => state.securityPost.postCentral, shallowEqual);
 
     return (
         <CustomScrollbar trigger={toggleBar}>
@@ -68,11 +68,11 @@ const EquipmentsInner = () => {
                     userId="086085266464"
                 />
                 {/* Empty contaiber for aligment flexbox */}
-                <i aria-hidden="true"></i>
-                <i aria-hidden="true"></i>
-                <i aria-hidden="true"></i>
-                <i aria-hidden="true"></i>
-                <i aria-hidden="true"></i>
+                <i aria-hidden="true" />
+                <i aria-hidden="true" />
+                <i aria-hidden="true" />
+                <i aria-hidden="true" />
+                <i aria-hidden="true" />
             </div>
         </CustomScrollbar>
     );

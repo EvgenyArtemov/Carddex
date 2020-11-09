@@ -5,7 +5,9 @@ import {
     StaffEmployeesActions,
     StaffEmployees,
     GET_STAFF_EMPLOYEES,
-    STAFF_EMPLOYEES_TOGGLE_SIDEBAR
+    STAFF_EMPLOYEES_TOGGLE_SIDEBAR,
+    STAFF_EMPLOYEES_TOGGLE_BAR,
+    STAFF_EMPLOYEES_QUICK_FILTER
 } from './staffEmployeesTypes';
 
 export const getStaffEmployees = (employees: StaffEmployees): StaffEmployeesActions => ({
@@ -15,6 +17,14 @@ export const getStaffEmployees = (employees: StaffEmployees): StaffEmployeesActi
 
 export const staffEmployeesToggleSidebar = (): StaffEmployeesActions => ({
     type: STAFF_EMPLOYEES_TOGGLE_SIDEBAR
+});
+
+export const staffEmployeesToggleToggleBar = (): StaffEmployeesActions => ({
+    type: STAFF_EMPLOYEES_TOGGLE_BAR
+});
+
+export const staffEmployeesToggleQuickFilter = (): StaffEmployeesActions => ({
+    type: STAFF_EMPLOYEES_QUICK_FILTER
 });
 
 export const requestEmployees = () => (dispatch: Dispatch<StaffEmployeesActions>) => {

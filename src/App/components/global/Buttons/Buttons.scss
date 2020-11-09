@@ -1,6 +1,6 @@
-@import "../../../../assets/styles/utils/mixin";
+@import '../../../../assets/styles/utils/mixin';
 
-.custome-button {
+.custom-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,12 +16,6 @@
         padding: $indent-sm;
         border-radius: $border-rad_10;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
-        @each $theme, $map in $themes {
-            .#{$theme} & {
-                fill: map-get($map, brandPantonBlue);
-                background: map-get($map, white);
-            }
-        }
     }
 
     .prompt {
@@ -38,7 +32,7 @@
         border-radius: $border-rad_10;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
 
-        &>* {
+        & > * {
             padding: 0 $indent-sm;
             text-align-last: left;
             opacity: 0;
@@ -49,8 +43,8 @@
 
     /* SIZE */
     &--square-sm {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
     }
 
     &--square-m {
@@ -62,42 +56,24 @@
         width: 48px;
         height: 48px;
     }
-    
-    /* HOVER */
-    &:hover:not(&--disable):not(&--custome) {
-        transform:scale(1.2);
-        z-index: 1;
 
-        svg {            
-            @each $theme, $map in $themes {
-                .#{$theme} & {
-                    box-shadow: 0px 4px 4px map-get($map, brandBoxShadow);
-                }
-            }
-        }
+    /* HOVER */
+    &:hover:not(&--disable):not(&--custom) {
+        transform: scale(1.2);
+        z-index: 1;
 
         .prompt {
             max-width: 200px;
-            @each $theme, $map in $themes {
-                .#{$theme} & {
-                    background: map-get($map, white);
-                    border: 1px solid map-get($map, brandPantonBlue);
-                }
-            }
-            
-            &>* {
+
+            & > * {
                 padding: 0 calc(36px + #{$indent-sm}) 0 $indent-sm;
                 opacity: 1;
             }
 
-            &>*:empty {
+            & > *:empty {
                 padding: 0;
                 display: none;
-            }            
-        }
-
-        .prompt:empty {
-            border-color: transparent;
+            }
         }
     }
 
@@ -106,37 +82,95 @@
         svg {
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                  fill: map-get($map, brandPantonText);
+                    fill: map-get($map, brandPantonText);
+                    background: map-get($map, white);
+                }
+            }
+        }
+
+        &:hover {
+            svg {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        box-shadow: 0px 10px 10px map-get($map, brandBoxShadow);
+                    }
+                }
+            }
+
+            .prompt {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        border: 1px solid map-get($map, brandPantonBlue);
+                        background: map-get($map, white);
+                    }
                 }
             }
         }
     }
 
-    /* CUSTOME */
-    &--custome {
-        width: 100%;
-        justify-content: flex-start;
-        align-items: center;
-        border: 1px solid transparent;
-
-        & > *:first-child {
-            margin: 0 $indent-sm;
-        }
-
-        & > *:only-child {
-            flex: 1;
-            text-align: center;
-        }
-
-        .prompt {
-            display: none;
+    &--typical.custom-button--custom {
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, white);
+                border: 2px solid map-get($map, brandPantonBlue);
+            }
         }
 
         svg {
-            min-width: 34px;
+            background: none;
+        }
+
+        .buttons__label > * {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    color: map-get($map, brandPantonBlue);
+                }
+            }
+        }
+
+        &:hover {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    box-shadow: 0 5px 4px 0 rgba(map-get($map, brandPantonBlue), 0.35);
+                }
+            }
+
+            svg {
+                box-shadow: none;
+            }
+
+            .prompt {
+                border: none;
+                background: none;
+            }
+        }
+    }
+
+    /* CUSTOM */
+    &--custom {
+        width: 128px;
+        height: 36px;
+        @each $theme, $map in $themes {
+            .#{$theme} & {
+                background: map-get($map, white);
+            }
+        }
+
+        svg {
             max-width: 34px;
             height: 34px;
-            background: transparent !important;
+            background: transparent;
+            box-shadow: none;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    fill: map-get($map, brandPantonBlue);
+                }
+            }
+        }
+
+        .buttons__label > * {
+            text-align: center;
+            font-weight: 500;
         }
 
         .buttons__label {
@@ -146,46 +180,59 @@
         }
     }
 
-    
     /* ACTIVE */
-    &--active {
+    &--active:not(&--danger):not(&--disable):not(&--custom) {
         svg {
+            fill: white;
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                  fill: $white;
-                  background: map-get($map, brandPantonBlue);
+                    background: map-get($map, brandPantonBlue);
                 }
             }
         }
 
-        .prompt {
-            border: 1px solid transparent !important;
-        }
-        
         &:hover {
             svg {
                 @each $theme, $map in $themes {
                     .#{$theme} & {
                         background: lighten(map-get($map, brandPantonBlue), 10%);
+                        box-shadow: 0px 10px 10px rgba(map-get($map, brandPantonBlue), 0.2);
+                    }
+                }
+            }
+
+            .prompt {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        border: 1px solid lighten(map-get($map, brandPantonBlue), 10%);
                     }
                 }
             }
         }
 
-        .buttons__label>* {
+        .buttons__label > * {
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                  color: $white;
+                    color: $white;
                 }
             }
         }
     }
 
-    &--active.custome-button--custome {            
+    &--active.custom-button--typical.custom-button--custom {
+        border: none;
         @each $theme, $map in $themes {
             .#{$theme} & {
                 background: map-get($map, brandPantonBlue);
             }
+        }
+
+        svg {
+            fill: $white;
+        }
+
+        .buttons__label > * {
+            color: $white;
         }
 
         &:hover {
@@ -198,67 +245,85 @@
     }
 
     /* DANGER */
-    &--danger {
+    &--danger:not(&--active) {
         svg {
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                    fill: map-get($map, white) !important;
-                    background: map-get($map, brandPantonRed) !important;
+                    fill: map-get($map, brandPantonRed);
+                    background: map-get($map, white);
                 }
             }
         }
+    }
 
-        .prompt {
-            border: 1px solid transparent !important;
-        }
-        
+    &--danger:not(&--custom) {
         &:hover {
-            transform:scale(1.2);
-            
+            transform: scale(1.2);
+
             svg {
                 @each $theme, $map in $themes {
                     .#{$theme} & {
-                        background: lighten(map-get($map, brandPantonRed), 10%);
+                        box-shadow: 0px 10px 10px rgba(map-get($map, brandPantonRed), 0.2);
+                    }
+                }
+            }
+
+            .prompt {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        border: 1px solid map-get($map, brandPantonRed);
                     }
                 }
             }
         }
-
     }
-    
-    /* DISABLE */
-    &--disable {
-        opacity: 0.5;
-        cursor: not-allowed;
-        
+
+    &--active.custom-button--danger {
         svg {
+            fill: $white;
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                    fill: map-get($map, brandPantonText);
+                    background: map-get($map, brandPantonRed);
                 }
             }
         }
     }
-    
-    &--disable.custome-button--custome {
+
+    /* DISABLE */
+    &--disable {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        svg {
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    fill: map-get($map, brandPantonText);
+                    background: map-get($map, white);
+                }
+            }
+        }
+    }
+
+    &--disable.custom-button--custom {
         @each $theme, $map in $themes {
             .#{$theme} & {
                 background: darken(map-get($map, brandPantonBlue), 10%);
             }
         }
-        
+
         svg {
-            @each $theme, $map in $themes {
-                .#{$theme} & {
-                    fill: $white;
-                }
-            }
+            fill: $white;
+            background: transparent;
         }
 
-        .buttons__label>* {
+        .buttons__label > * {
+            color: $white;
+        }
+
+        &:hover {
             @each $theme, $map in $themes {
                 .#{$theme} & {
-                    color: $white;
+                    background: darken(map-get($map, brandPantonBlue), 10%);
                 }
             }
         }
@@ -269,6 +334,7 @@
         @each $theme, $map in $themes {
             .#{$theme} & {
                 box-shadow: 0 0 0 0.2rem map-get($map, brandFocus);
+                z-index: 100;
             }
         }
     }

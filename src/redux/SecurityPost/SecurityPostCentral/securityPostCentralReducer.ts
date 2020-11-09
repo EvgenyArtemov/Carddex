@@ -2,12 +2,14 @@ import {
     SecurityPostCentralState,
     SecurityPostCentralActions,
     SECURITY_POST_CENTRAL_TOGGLE_SIDEBAR,
-    SECURITY_POST_CENTRAL_TOGGLE_BOTTOMBAR
+    SECURITY_POST_CENTRAL_TOGGLE_BOTTOMBAR,
+    SECURITY_POST_CENTRAL_TOGGLE_BAR
 } from './securityPostCentralType';
 
 const initialState: SecurityPostCentralState = {
-    sidebarOpened: false,
-    bottombarOpened: false
+    sidebarOpened: true,
+    bottombarOpened: false,
+    toggleBar: false
 };
 
 const securityPostCentralReducer = (
@@ -24,6 +26,11 @@ const securityPostCentralReducer = (
             return {
                 ...state,
                 bottombarOpened: !state.bottombarOpened
+            };
+        case SECURITY_POST_CENTRAL_TOGGLE_BAR:
+            return {
+                ...state,
+                toggleBar: !state.toggleBar
             };
         default:
             return state;

@@ -12,11 +12,7 @@
     opacity: 0;
     transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
     z-index: 1000;
-    @each $theme, $map in $themes {
-        .#{$theme} & {
-            background: map-get($map, brandBoxShadow);
-        }
-    }
+    background: rgba($black, 0.3);
 
     &.visible {
         opacity: 1;
@@ -24,29 +20,27 @@
 }
 
 .modal {
-    min-width: 400px;
-    min-height: 200px;
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
+    border-radius: $border-rad_10;
     @each $theme, $map in $themes {
         .#{$theme} & {
             background: map-get($map, white);
-            box-shadow: 
-                0px 11px 15px -7px (map-get($map, brandBoxShadowComplex1)),
-                0px 24px 38px 3px (map-get($map, brandBoxShadowComplex2)),
-                0px 9px 46px 8px (map-get($map, brandBoxShadowComplex3));
+            box-shadow: 0px 10px 10px 0px rgba(map-get($map, black), 0.2);
         }
     }
 
     &__header {
         display: flex;
-        padding: $indent-sm;
+        padding: $indent-md;
         border-bottom: 1px solid;
         align-items: center;
+        border-radius: $border-rad_10 $border-rad_10 0 0;
+        cursor: all-scroll;
         @each $theme, $map in $themes {
             .#{$theme} & {
                 border-color: map-get($map, borderColor);
+                background: map-get($map, borderColor);
             }
         }
 
@@ -55,27 +49,37 @@
             flex: 1;
 
             &__icon {
-                width: $indent-md;
-                height: $indent-md;
                 margin-right: $indent-sm;
 
                 svg {
-                    vertical-align: top;
+                    width: 18px;
+                    height: 18px;
                     @each $theme, $map in $themes {
                         .#{$theme} & {
-                            fill: map-get($map, brandPantonText);
+                            fill: map-get($map, brandPantonBlue);
+                        }
+                    }
+                }
+
+                &.Attention svg,
+                &.Warning svg {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonYellow);
+                        }
+                    }
+                }
+
+                &.Danger svg {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonRed);
                         }
                     }
                 }
             }
 
-            &__label {
-                font-size: $indent-md;
-                font-weight: 600;
-            }
-
             &__toggler {
-                align-items: center;
                 margin-left: auto;
                 transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
                 cursor: pointer;
@@ -85,39 +89,202 @@
                 }
 
                 svg {
-                    width: $indent-lg;
-                    height: $indent-lg;
+                    width: 18px;
+                    height: 18px;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, black);
+                        }
+                    }
                 }
             }
         }
     }
 
     &__body {
+        flex: 1 100%;
         display: flex;
         flex-direction: column;
-        padding: $indent-sm $indent-md;
+        padding: $indent-lg;
+
+        .tabbar {
+            .tabbar-bar {
+                &__tabs {
+                    margin: 0;
+                }
+            }
+        }
+
+        .custom-input {
+            &__label {
+                &-title > * {
+                    font-size: 14px;
+                    line-height: 14px;
+                    font-weight: 400;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            color: map-get($map, brandPantonText) !important;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     &__footer {
         display: flex;
-        margin-top: auto;
-        border-top: 1px solid;
-        @each $theme, $map in $themes {
-            .#{$theme} & {
-                border-color: map-get($map, borderColor);
-            }
-        }
+        padding: $indent-lg $indent-md $indent-md $indent-md;
 
         .modal-footer__content {
             width: 100%;
             display: flex;
-            justify-content: flex-end;
-            padding: $indent-sm;
+            justify-content: center;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    background: map-get($map, white);
+                }
+            }
+
+            .custom-button {
+                width: 128px;
+                height: 32px;
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        background: map-get($map, white);
+                    }
+                }
+
+                .buttons__label > * {
+                    text-align: center;
+                    font-weight: 500;
+                }
+
+                &--typical {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            background: map-get($map, white);
+                            border: 2px solid map-get($map, brandPantonBlue);
+                        }
+                    }
+
+                    .buttons__label > * {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                color: map-get($map, brandPantonBlue);
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                box-shadow: 0 5px 4px 0 rgba(map-get($map, brandPantonBlue), 0.35);
+                            }
+                        }
+                    }
+                }
+
+                &--danger {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            background: map-get($map, white);
+                            border: 2px solid map-get($map, brandPantonRed);
+                        }
+                    }
+
+                    .buttons__label > * {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                color: map-get($map, brandPantonRed);
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        @each $theme, $map in $themes {
+                            .#{$theme} & {
+                                box-shadow: 0 5px 4px 0 rgba(map-get($map, brandPantonRed), 0.35);
+                            }
+                        }
+                    }
+                }
+            }
 
             > *:not(*:last-child) {
                 user-select: none;
-                margin-right: $indent-sm;
+                margin-right: $indent-md;
             }
+        }
+    }
+
+    &.dialog-modal {
+        .modal__body {
+            padding: 0 $indent-lg;
+        }
+
+        .modal-footer__content {
+            justify-content: flex-end;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    border-top: 2px solid map-get($map, brandBorderColor);
+                }
+            }
+
+            .custom-button {
+                margin-top: $indent-md;
+            }
+        }
+    }
+
+    &.alert-modal {
+        width: 400px;
+
+        .modal__body {
+            display: flex;
+            flex-direction: row;
+
+            &-icon {
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                &.error {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonRed);
+                        }
+                    }
+                }
+
+                &.warning {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonYellow);
+                        }
+                    }
+                }
+
+                &.info,
+                &.delete {
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            fill: map-get($map, brandPantonBlue);
+                        }
+                    }
+                }
+            }
+
+            &-info {
+                flex: 1 100%;
+                display: flex;
+                align-items: center;
+                margin-left: $indent-md;
+            }
+        }
+
+        .modal__footer {
+            padding: $indent-md;
         }
     }
 }

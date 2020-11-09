@@ -149,7 +149,7 @@
                 align-items: flex-end;
                 justify-content: flex-end;
 
-                .custome-button {
+                .custom-button {
                     svg {
                         @each $theme, $map in $themes {
                             .#{$theme} & {

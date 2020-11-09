@@ -13,18 +13,34 @@ const Header = () => {
     const history = useHistory();
     const { sidenavOpened, theme } = useSelector((state: State) => state.app, shallowEqual);
 
-    const shownHideAnim = () => {
+    // const shownHideAnim = () => {
+    //     const targetElement = document.querySelector('.side')?.classList!;
+
+    //     if (!targetElement.contains('hidden') && !targetElement.contains('shown')) {
+    //         targetElement.add('hidden');
+    //     } else if (targetElement.contains('hidden')) {
+    //         targetElement.remove('hidden');
+    //         targetElement.add('shown');
+    //     } else {
+    //         targetElement.remove('shown');
+    //         targetElement.add('hidden');
+    //     }
+    // };
+
+    const openCloseBarBehavior = () => {
         const targetElement = document.querySelector('.side')?.classList!;
 
-        if (!targetElement.contains('hidden') && !targetElement.contains('shown')) {
-            targetElement.add('hidden');
-        } else if (targetElement.contains('hidden')) {
-            targetElement.remove('hidden');
-            targetElement.add('shown');
-        } else {
+        if (sidenavOpened) {
             targetElement.remove('shown');
+            targetElement.add('anim');
             targetElement.add('hidden');
+        } else {
+            targetElement.remove('hidden');
+            targetElement.add('anim');
+            targetElement.add('shown');
         }
+
+        // props.bottombarToggler();
     };
 
     const unAuth = () => {
@@ -59,15 +75,15 @@ const Header = () => {
             <div className="header__content">
                 <div className="header__content__hamburger">
                     <button
+                        type="button"
                         className={classNames('header__content__toggler', {
                             header__content__toggler__opened: sidenavOpened
                         })}
                         onClick={() => {
-                            shownHideAnim();
+                            openCloseBarBehavior();
                             dispatch(appToggleSidenav());
                         }}
-                        role="navigation"
-                    >
+                        role="navigation">
                         <span />
                         <span />
                         <span />

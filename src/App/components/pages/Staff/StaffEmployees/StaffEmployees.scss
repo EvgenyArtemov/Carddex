@@ -1,1 +1,13 @@
-@import "../../../../../assets/styles/utils/mixin";
+@import '../../../../../assets/styles/utils/mixin';
+
+.staff-employees {
+    .tabbar {
+        .tabbar-bar {
+            min-height: 35px;
+
+            &__tabs-marcker {
+                bottom: 0px;
+            }
+        }
+    }
+}

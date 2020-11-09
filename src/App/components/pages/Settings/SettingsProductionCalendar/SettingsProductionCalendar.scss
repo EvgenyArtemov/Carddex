@@ -8,19 +8,20 @@
     .settingsWrapper {
         display: flex;
         height: 100%;
+        flex: 1 100%;
     }
 
     .production__calendar__wrapper {
         display: flex;
+        justify-content: center;
         position: relative;
         width: 100%;
         margin: $indent-md;
         border: 1px solid #efefef;
 
         .timeline {
-            margin-left: 40px;
             width: 80px;
-            margin-right: -30px;
+            margin-right: 20px;
 
             &__body {
                 position: relative;
@@ -100,8 +101,8 @@
             align-items: center;
             grid-column-gap: 30px;
             grid-row-gap: 10px;
-            margin: 0 auto;
-            height: 100%;
+            margin: 10px 20px;
+            // height: 100%;
 
             .month {
                 padding: 10px;

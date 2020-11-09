@@ -1,0 +1,100 @@
+[
+    {
+        "linkName": "Контроль",
+        "linkSubLink": [
+            { "sublinkName": "Центральный пост", "sublinkUrl": "/security-post-central" },
+            { "sublinkName": "Посещаемость", "sublinkUrl": "/security-attendance" },
+            { "sublinkName": "Мониторинг", "sublinkUrl": "/security-post-monitoring" }
+        ]
+    },
+    {
+        "linkName": "Учебное заведение 1",
+        "linkSubLink": [
+            { "sublinkName": "Факультеты", "sublinkUrl": "/pupils-faculties" },
+            { "sublinkName": "Группы", "sublinkUrl": "/pupils-groups" },
+            { "sublinkName": "Студенты", "sublinkUrl": "/pupils-schedules" },
+            { "sublinkName": "Расписания", "sublinkUrl": "/pupils-students" }
+        ]
+    },
+    {
+        "linkName": "Учебное заведение 2",
+        "linkSubLink": [
+            { "sublinkName": "Школы", "sublinkUrl": "/schoolchild-school" },
+            { "sublinkName": "Классы", "sublinkUrl": "/schoolchild-class" },
+            { "sublinkName": "Ученики", "sublinkUrl": "/schoolchild-students" },
+            { "sublinkName": "Предметы", "sublinkUrl": "/schoolchild-subjects" },
+            { "sublinkName": "Расписания", "sublinkUrl": "/schoolchild-schedults" }
+        ]
+    },
+    {
+        "linkName": "Персонал",
+        "linkSubLink": [
+            { "sublinkName": "Организации", "sublinkUrl": "/staff-organizations" },
+            { "sublinkName": "Подразделения", "sublinkUrl": "/staff-departments" },
+            { "sublinkName": "Должности", "sublinkUrl": "/staff-positions" },
+            { "sublinkName": "Сотрудники", "sublinkUrl": "/staff-employees" },
+            { "sublinkName": "Графики работы", "sublinkUrl": "/staff-timetable" }
+        ]
+    },
+    { "linkName": "Посетители", "linkUrl": "/visitors" },
+    {
+        "linkName": "Идентификаторы",
+        "linkSubLink": [
+            { "sublinkName": "Бесконтактные RFID ключи", "sublinkUrl": "/identifiers-rfid" },
+            { "sublinkName": "Отпечатки пальцев", "sublinkUrl": "/identifiers-biometrics" },
+            { "sublinkName": "Фотографии", "sublinkUrl": "/identifiers-photo" },
+            { "sublinkName": "2D штрих-коды", "sublinkUrl": "/identifiers-qr" },
+            { "sublinkName": "Пин-коды", "sublinkUrl": "/identifiers-pin" }
+        ]
+    },
+    {
+        "linkName": "Отчеты",
+        "linkSubLink": [
+            { "sublinkName": "События", "sublinkUrl": "/reports-events" },
+            { "sublinkName": "Учет рабочего времени", "sublinkUrl": "/reports-working-time" },
+            { "sublinkName": "Дисциплина", "sublinkUrl": "/reports-discipline" },
+            { "sublinkName": "Статистика", "sublinkUrl": "/reports-statistics" },
+            { "sublinkName": "Отклонения", "sublinkUrl": "/reports-deviations" },
+            { "sublinkName": "Посетители", "sublinkUrl": "/reports-guest-visits" }
+        ]
+    },
+    {
+        "linkName": "Интеграции",
+        "linkSubLink": [
+            { "sublinkName": "1С", "sublinkUrl": "/integration-1c" },
+            { "sublinkName": "ЭНТ", "sublinkUrl": "/integration-ent" },
+            { "sublinkName": "Болид - Орион ПРО", "sublinkUrl": "/integration-orionPro" },
+            { "sublinkName": "PERCo", "sublinkUrl": "/integration-perco" }
+        ]
+    },
+    {
+        "linkName": "Настройки",
+        "linkSubLink": [
+            { "sublinkName": "Профиль", "sublinkUrl": "/settings-profile" },
+            { "sublinkName": "Пользователи и роли", "sublinkUrl": "/settings-users-and-roles" },
+            { "sublinkName": "Параметры", "sublinkUrl": "/settings-parameters" },
+            { "sublinkName": "Зональность территории", "sublinkUrl": "/settings-territory-zoning" },
+            { "sublinkName": "Оборудование", "sublinkUrl": "/settings-equipment" },
+            { "sublinkName": "Шаблоны доступа", "sublinkUrl": "/settings-access-patterns" },
+            { "sublinkName": "Производственный календарь", "sublinkUrl": "/settings-production-calendar" },
+            { "sublinkName": "Импорт, экспорт данных", "sublinkUrl": "/import-export" },
+            { "sublinkName": "Управление Базой Данных", "sublinkUrl": "/settings-database" },
+            { "sublinkName": "О программе", "sublinkUrl": "/settings-about-program" }
+        ]
+    },
+    {
+        "linkName": "CARDDEX",
+        "linkSubLink": [
+            { "sublinkName": "Задания и заказы", "sublinkUrl": "/tasks-and-orders" },
+            { "sublinkName": "Партнеры", "sublinkUrl": "/partners" },
+            { "sublinkName": "Новости", "sublinkUrl": "/news" },
+            { "sublinkName": "Персональные предложения", "sublinkUrl": "/personal-suggestions" },
+            { "sublinkName": "Каталог продукции", "sublinkUrl": "/product-catalog" },
+            { "sublinkName": "Номенклатура", "sublinkUrl": "/nomenclature" },
+            { "sublinkName": "WEB-приложения", "sublinkUrl": "/web-applications" },
+            { "sublinkName": "Карта продукции", "sublinkUrl": "/product-card" },
+            { "sublinkName": "Сервис", "sublinkUrl": "/service" },
+            { "sublinkName": "Отчеты", "sublinkUrl": "/reports" }
+        ]
+    }
+]

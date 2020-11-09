@@ -12,11 +12,16 @@ import { Settings } from 'App/../assets/images/settings_button';
 import { Sort } from 'App/../assets/images/sort_button';
 import { Relolad } from 'App/../assets/images/reload_button';
 import { Print } from 'App/../assets/images/print_button';
-import { Preview } from 'App/../assets/images/preview';
+import { Show } from 'App/../assets/images/bx-show';
 import { View } from 'App/../assets/images/page-view';
 import { Close } from 'App/../assets/images/bx-x';
+import { ArrowLeft } from 'App/../assets/images/arrow-left';
+import { ArrowRight } from 'App/../assets/images/arrow-right';
+import { ArrowUp } from 'App/../assets/images/arrow-up';
+import { ArrowDown } from 'App/../assets/images/arrow-down';
 import { Pie } from 'App/../assets/images/bxs-pie-chart-alt-2';
 import { QuickFilter } from 'App/../assets/images/bx-quick-filter';
+import { Filter } from 'App/../assets/images/filter';
 import { ViewHorizontal } from 'App/../assets/images/page-view_horizontal';
 import { ViewVertical } from 'App/../assets/images/page-view_vertical';
 import { ImportXls } from 'App/../assets/images/import_xls-button';
@@ -36,6 +41,9 @@ import { LetOutOne } from 'App/../assets/images/bx-last-page';
 import { LetOutMany } from 'App/../assets/images/bx-chevrons-right';
 import { Warning } from 'App/../assets/images/bx-error-circle';
 import { Bell } from 'App/../assets/images/bxs-bell-ring';
+import { SecurityCall } from 'App/../assets/images/security-call';
+import { BlockUnLock } from 'App/../assets/images/block-unlock';
+import { BlockLock } from 'App/../assets/images/block-lock';
 import { Gear } from 'App/../assets/images/bx-cog';
 import { Layers } from 'App/../assets/images/bx-layer';
 import { ScanFace } from 'App/../assets/images/bx-scan';
@@ -54,19 +62,18 @@ const ButtonsInner = (props: ButtonsType) => {
         <button
             type="button"
             className={`
-                custome-button
-                ${props.disable && 'custome-button--disable'}
-                ${props.danger && 'custome-button--danger'}
-                ${props.active && 'custome-button--active'}
-                ${(!props.disable === !props.danger) === !props.active && 'custome-button--typical'}
-                ${props.size === 'sm' && 'custome-button--square-sm'}
-                ${props.size === 'lg' && 'custome-button--square-lg'}
-                ${props.size === 'm' && 'custome-button--square-m'}
-                ${!props.size && 'custome-button--custome'}
+                custom-button
+                ${props.disable ? 'custom-button--disable' : ''}
+                ${props.danger ? 'custom-button--danger' : ''}
+                ${props.active ? 'custom-button--active' : ''}
+                ${props.typical ? 'custom-button--typical' : ''}
+                ${props.size === 'sm' ? 'custom-button--square-sm' : ''}
+                ${props.size === 'lg' ? 'custom-button--square-lg' : ''}
+                ${props.size === 'm' ? 'custom-button--square-m' : ''}
+                ${!props.size ? 'custom-button--custom' : ''}
             `}
             tabIndex={props.disable ? -1 : undefined}
-            onClick={props.onPress}
-        >
+            onClick={props.onPress}>
             <div className="prompt">
                 <div className="p--sm--normal">{props.prompt}</div>
             </div>
@@ -84,11 +91,16 @@ const ButtonsInner = (props: ButtonsType) => {
             {props.name === 'Sort' && <Sort />}
             {props.name === 'Relolad' && <Relolad />}
             {props.name === 'Print' && <Print />}
-            {props.name === 'Preview' && <Preview />}
+            {props.name === 'Show' && <Show />}
             {props.name === 'View' && <View />}
             {props.name === 'Close' && <Close />}
+            {props.name === 'ArrowLeft' && <ArrowLeft />}
+            {props.name === 'ArrowRight' && <ArrowRight />}
+            {props.name === 'ArrowUp' && <ArrowUp />}
+            {props.name === 'ArrowDown' && <ArrowDown />}
             {props.name === 'Pie' && <Pie />}
             {props.name === 'QuickFilter' && <QuickFilter />}
+            {props.name === 'Filter' && <Filter />}
             {props.name === 'ViewHorizontal' && <ViewHorizontal />}
             {props.name === 'ViewVertical' && <ViewVertical />}
             {props.name === 'ImportXls' && <ImportXls />}
@@ -108,6 +120,9 @@ const ButtonsInner = (props: ButtonsType) => {
             {props.name === 'LetOutMany' && <LetOutMany />}
             {props.name === 'Warning' && <Warning />}
             {props.name === 'Bell' && <Bell />}
+            {props.name === 'SecurityCall' && <SecurityCall />}
+            {props.name === 'BlockUnLock' && <BlockUnLock />}
+            {props.name === 'BlockLock' && <BlockLock />}
             {props.name === 'prev' && <PrevButton />}
             {props.name === 'next' && <NextButton />}
             {props.name === 'Gear' && <Gear />}

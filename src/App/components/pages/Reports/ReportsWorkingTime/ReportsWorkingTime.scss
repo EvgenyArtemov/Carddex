@@ -1,4 +1,13 @@
-.reports-working-time {
+.reports__workingtime {
     display: flex;
     flex-direction: column;
+    width: 100%;
+
+    &__placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 135px auto 0;
+    }
 }

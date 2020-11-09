@@ -16,8 +16,7 @@
     &__header {
         width: 100%;
         display: flex;
-        flex-direction: column;
-        padding: $indent-sm $indent-sm;
+        padding: $indent-sm;
         z-index: 103;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
         @each $theme, $map in $themes {
@@ -34,7 +33,7 @@
         }
     }
 
-    .custome-button--typical {
+    .custom-button--typical {
         svg {
             @each $theme, $map in $themes {
                 .#{$theme} & {
@@ -59,17 +58,19 @@
     }
 
     &__body {
+        flex: 1 100%;
+        flex-direction: column;
         width: 0;
         height: 100%;
         transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+        overflow: hidden;
     }
 
     &.shown {
-        animation: sampleanimation2 0.25s forwards;
+        min-width: 400px;
+        max-width: 400px;
 
         .sidebar__header {
-            flex-direction: row;
-            padding: $indent-sm $indent-md;
             @each $theme, $map in $themes {
                 .#{$theme} & {
                     box-shadow: 0px 2px 10px map-get($map, brandBoxShadow);
@@ -81,7 +82,7 @@
             }
 
             &-close {
-                .custome-button--typical {
+                .custom-button--typical {
                     svg {
                         @each $theme, $map in $themes {
                             .#{$theme} & {
@@ -102,31 +103,11 @@
 
         .sidebar__body {
             width: 100%;
+            display: flex;
         }
     }
 
     &.hidden {
-        animation: sampleanimation1 0.25s forwards;
-    }
-}
-
-@keyframes sampleanimation2 {
-    0% {
-        min-width: 50px;
-        max-width: 50px;
-    }
-    100% {
-        min-width: 400px;
-        max-width: 400px;
-    }
-}
-
-@keyframes sampleanimation1 {
-    0% {
-        min-width: 400px;
-        max-width: 400px;
-    }
-    100% {
         min-width: 50px;
         max-width: 50px;
     }

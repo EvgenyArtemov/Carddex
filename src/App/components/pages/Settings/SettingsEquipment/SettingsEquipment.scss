@@ -1,3 +1,58 @@
+@import "../../../../../assets/styles/utils/mixin";
+
 .settings-equipment {
     display: flex;
+
+    .sidebar-tab {
+        padding: $indent-md;
+
+        &__group {            
+            &-section {
+                display: flex;
+                align-items: flex-end;
+                grid-gap: $indent-md;
+
+                &>* {
+                    flex: 1;
+                }
+            }
+
+            &:nth-child(n) {
+                &:not(:only-child):not(:last-child) {
+                    padding-bottom: $indent-lg;
+                    margin-bottom: $indent-lg;
+                    @each $theme, $map in $themes {
+                        .#{$theme} & {
+                            border-bottom: 1px solid map-get($map, brandBorderColor);
+                        }
+                    }
+                }
+
+                &>*:nth-child(n):not(:only-child):not(:last-child) {
+                    margin-bottom: $indent-md;
+                }
+            }
+        }
+
+        &__input-button {
+            height: 26px;
+            border-radius: 3px;
+            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+            cursor: pointer;
+            @each $theme, $map in $themes {
+                .#{$theme} & {
+                    border: 2px solid map-get($map, brandPantonBlue);
+                    color: map-get($map, brandPantonBlue);
+                }
+            }
+
+            &:hover {
+                @each $theme, $map in $themes {
+                    .#{$theme} & {
+                        box-shadow: 0px 4px 4px map-get($map, brandBoxShadow);
+                    }
+                }
+            }
+        }
+    }
 }

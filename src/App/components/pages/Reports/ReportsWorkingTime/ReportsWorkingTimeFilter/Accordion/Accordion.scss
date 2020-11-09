@@ -1,0 +1,47 @@
+@import '../../../../../../../assets/styles/utils/mixin';
+
+.accordion {
+    &__wrapper {
+        margin-top: -2px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        user-select: none;
+        border-top: 2px solid $borderColor;
+        border-bottom: 2px solid $borderColor;
+
+        & > h2 {
+            font-weight: 500;
+            margin-left: 14px;
+        }
+
+        & > svg {
+            transition: all 0.2s ease-in-out;
+            transform: rotate(180deg);
+            margin-right: 14px;
+        }
+
+        &.opened > svg {
+            transform: rotate(0);
+        }
+    }
+
+    &__content {
+        transition: all 0.2s ease-in-out;
+        max-height: 0;
+        margin: 0;
+        // transform: scaleY(0);
+        margin-left: 14px;
+        overflow: hidden;
+
+        &.opened {
+            margin: 14px 0 14px 14px;
+            max-height: 1000px;
+            // transform: scaleY(1);
+        }
+    }
+}

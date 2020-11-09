@@ -17,8 +17,6 @@ const LoginInner = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [authorization, setAuthorization] = useState(false);
-    const [logintest, setLogintest] = useState('');
-    const [passwordtest, setPasswordtest] = useState('');
     const [isSaveUser, setIsSaveUser] = useState(false);
     const [isValid, setIsValid] = useState(false);
     const [progress, setProgress] = useState(false);
@@ -26,6 +24,16 @@ const LoginInner = () => {
     const [error, setError] = useState('');
     const leftPart = useRef<HTMLDivElement>(null);
     const rightPart = useRef<HTMLDivElement>(null);
+    const initialState = {
+        login: '',
+        password: ''
+    };
+    const [inputsState, setInputsState] = useState(initialState);
+
+    const inputHandler = (ev: React.ChangeEvent) => {
+        const target = ev.target as HTMLInputElement;
+        setInputsState({ ...inputsState, [target.name]: target.value });
+    };
 
     useTitle(`IMS CARDDEX ${config.defaultTitle}`);
 
@@ -35,9 +43,18 @@ const LoginInner = () => {
             dispatch(appShowProgressBar());
 
             setTimeout(() => {
-                if (logintest === 'admin' && passwordtest === 'admin') {
+                if (
+                    inputsState.login === 'admin' &&
+                    inputsState.password === 'admin'
+                ) {
                     if (isSaveUser) {
-                        localStorage.setItem('user', JSON.stringify({ login: logintest, password: passwordtest }));
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify({
+                                login: inputsState.login,
+                                password: inputsState.password
+                            })
+                        );
                     }
 
                     setAuthorization(true);
@@ -56,14 +73,16 @@ const LoginInner = () => {
     useEffect(() => {
         setError('');
 
-        if (logintest && passwordtest) {
-            const validationArr = Array.from(document.querySelectorAll('.custom-input__wrapper')).map((e) => {
+        if (inputsState.login && inputsState.password) {
+            const validationArr = Array.from(
+                document.querySelectorAll('.custom-input__wrapper')
+            ).map((e) => {
                 return !e.classList.contains('custom-input__wrapper--invalid');
             });
 
             setIsValid(!validationArr.includes(false));
         }
-    }, [logintest, passwordtest]);
+    }, [inputsState.login, inputsState.password]);
 
     return (
         <div className="login">
@@ -76,8 +95,7 @@ const LoginInner = () => {
                     if (authorization) {
                         history.push('/security-post-central');
                     }
-                }}
-            >
+                }}>
                 <div className="login-left__content">
                     <div className="login-left__title">
                         <div className="p--lg--bold">Вход в систему</div>
@@ -89,15 +107,14 @@ const LoginInner = () => {
                             if (event.key === 'Enter') {
                                 logining();
                             }
-                        }}
-                    >
+                        }}>
                         <Inputs
                             name="login"
                             label="Имя пользователя"
                             icon
-                            onInputChange={setLogintest}
+                            onInputChange={inputHandler}
                             type="text"
-                            value={logintest}
+                            value={inputsState.login}
                             error={!!error}
                             validation="(?=.*[a-z]).{5,}" // [a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$
                             validationTitle="Логин пользователя должен быть не меньше 5 символов."
@@ -108,9 +125,9 @@ const LoginInner = () => {
                             name="password"
                             label="Пароль пользователя"
                             icon
-                            onInputChange={setPasswordtest}
+                            onInputChange={inputHandler}
                             type="password"
-                            value={passwordtest}
+                            value={inputsState.password}
                             error={!!error}
                             // validation="(*).{0,}" // (?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}
                             // validationTitle="Пароль должен содержать не менее 6 символов, в том числе цифры, прописные и строчные буквы латинского алфавита. Пробелы являются недопустимым символом."
@@ -123,7 +140,9 @@ const LoginInner = () => {
                                 onChange={() => setIsSaveUser(!isSaveUser)}
                                 checked={isSaveUser}
                             />
-                            <label htmlFor="checkbox_save-user" className="p--md--normal">
+                            <label
+                                htmlFor="checkbox_save-user"
+                                className="p--md--normal">
                                 Автоматически входить на данном устройстве
                             </label>
                         </div>
@@ -132,6 +151,7 @@ const LoginInner = () => {
                             name={!progress ? 'Enter' : 'Loader'}
                             label="Вход"
                             active
+                            typical={isValid}
                             disable={!isValid}
                             onPress={(e) => {
                                 logining();
@@ -164,12 +184,18 @@ const LoginInner = () => {
                         </div>
 
                         <div className="login-right__title">
-                            <div className="p--lg--normal">ПАК «Производство»</div>
+                            <div className="p--lg--normal">
+                                ПАК «Производство»
+                            </div>
                         </div>
                     </div>
 
                     <div className="login-right__body">
-                        <img className="login-right__image" src={rightImage} alt="Bilbords" />
+                        <img
+                            className="login-right__image"
+                            src={rightImage}
+                            alt="Bilbords"
+                        />
                     </div>
                 </div>
             </div>
